@@ -1,0 +1,3 @@
+#https://newbedev.com/php-htaccess-file-for-laravel-8-code-example
+RewriteEngine On
+RewriteRule (.*) public/$1
