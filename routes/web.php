@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\ProductsController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::name('product.')->group(function () {
+  Route::get('/',                   [ProductsController::class, 'index'])->name('index');
+  Route::get('/product/{product}',  [ProductsController::class, 'detail'])->name('detail');
 });
