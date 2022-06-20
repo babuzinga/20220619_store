@@ -26,14 +26,12 @@
     <br>
 
     @yield('main')
-    <br>
-    <a href="https://getbootstrap.com/docs/5.2/examples/" target="_blank">Examples · Bootstrap v5.2</a>
   </div>
 </main>
 
 <footer class="footer mt-auto py-3 bg-light">
   <div class="container">
-    <span style="color:#ff0030;">JINIMIN</span>
+    <a href="https://getbootstrap.com/docs/5.2/examples/" target="_blank">Examples · Bootstrap v5.2</a>
     @env('local')
     <span class="float-end text-muted">Laravel v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }})</span>
     @endenv
