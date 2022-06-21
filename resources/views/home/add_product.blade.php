@@ -32,7 +32,7 @@
       </div>
     @endif
 
-    <button type="submit" class="btn btn-primary">Save</button>
+    <button type="submit" class="btn btn-success">Save</button>
     <a href="{{ route('home.index') }}" class="btn btn-link">Back</a>
   </form>
 @endsection

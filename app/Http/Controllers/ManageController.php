@@ -37,7 +37,6 @@ class ManageController extends Controller
    */
   public function save_catalog(Request $request)
   {
-    //echo '<pre>', print_r($_POST, 1), '</pre>'; exit;
     $data = [
       'title_eng'       => !empty($_POST['title_eng']) ? $request->title_eng : '-',
       'title_rus'       => !empty($_POST['title_rus']) ? $request->title_rus : '-',

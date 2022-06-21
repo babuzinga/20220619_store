@@ -13,6 +13,16 @@ use Illuminate\Support\Facades\Auth;
  */
 class HomeController extends Controller
 {
+  const BB_VALIDATOR = [
+    'title'       => 'required|max:50',
+    'price'       => 'required|numeric',
+    'catalog_id'  => 'numeric'
+  ];
+
+  const BB_ERROR_MESSAGES = [
+    'price.required' => 'Enter the price of the item',
+  ];
+
   /**
    * Create a new controller instance.
    *
@@ -49,13 +59,14 @@ class HomeController extends Controller
    */
   public function save_product(Request $request)
   {
+    $validate = $request->validate(self::BB_VALIDATOR, self::BB_ERROR_MESSAGES);
     $data = [
-      'title'       => !empty($_POST['title']) ? $request->title : '-',
-      'price'       => !empty($_POST['price']) ? $request->price : '-',
+      'title'      => $validate['title'],
+      'price'      => $validate['price'],
+      'catalog_id' => $validate['catalog_id'],
     ];
 
-    if (!empty($_POST['catalog_id']))
-      $data['catalog_id'] = $request->catalog_id;
+    if (empty($data['catalog_id'])) unset($data['catalog_id']);
 
     Auth::user()->products()->create($data);
     return redirect()->route('home.index');
@@ -78,13 +89,14 @@ class HomeController extends Controller
    */
   public function update_product(Request $request, Product $product)
   {
+    $validate = $request->validate(self::BB_VALIDATOR, self::BB_ERROR_MESSAGES);
     $data = [
-      'title'       => !empty($_POST['title']) ? $request->title : '-',
-      'price'       => !empty($_POST['price']) ? $request->price : '-',
+      'title'      => $validate['title'],
+      'price'      => $validate['price'],
+      'catalog_id' => $validate['catalog_id'],
     ];
 
-    if (!empty($_POST['catalog_id']))
-      $data['catalog_id'] = (int)$request->catalog_id;
+    if (empty($data['catalog_id'])) unset($data['catalog_id']);
 
     $product->fill($data);
     $product->save();
