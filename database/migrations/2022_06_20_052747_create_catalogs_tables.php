@@ -22,13 +22,11 @@ class CreateCatalogsTables extends Migration
       $table->timestamps();
     });
 
-    DB::statement("ALTER TABLE catalogs AUTO_INCREMENT = 100000;");
+    /*DB::table('catalogs')->insert([
+      ['title_eng' => 'Not set',     'title_rus' => 'Не задан',  'created_at' => '2022-06-20 16:12:36'],
+    ]);*/
 
-    DB::table('catalogs')->insert([
-      ['title_eng' => 'badges',     'title_rus' => 'значки',  'created_at' => '2022-06-20 16:12:36'],
-      ['title_eng' => 'bags',       'title_rus' => 'сумки',   'created_at' => '2022-06-20 16:12:36'],
-      ['title_eng' => 'key-chains', 'title_rus' => 'брелки',  'created_at' => '2022-06-20 16:12:36'],
-    ]);
+    DB::statement("ALTER TABLE catalogs AUTO_INCREMENT = 100000;");
   }
 
   /**

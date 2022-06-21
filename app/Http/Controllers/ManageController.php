@@ -2,34 +2,31 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Product;
-use App\Models\User;
+use App\Models\Catalog;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class ManageController extends Controller
 {
-  public function add_user()
+  public function add_catalog()
   {
-    $user = User::create([
-      'name'      => 'admin2',
-      'email'     => 'admin2@domain.com',
-      'password'  => Hash::make('admin'),
-    ]);
-    exit;
+    $catalogs = Catalog::all();
+    return view('manage/add_catalog', ['catalogs' => $catalogs]);
   }
 
-  public function add_product()
+  public function save_catalog(Request $request)
   {
-    $user = User::where('name', 'admin2')->first();
-    $product = new Product();
-    $product->title = 'product';
-    $product->price = 1111;
-    $product->catalog_id = 100000;
+    //echo '<pre>', print_r($_POST, 1), '</pre>'; exit;
+    $data = [
+      'title_eng'       => !empty($_POST['title_eng']) ? $request->title_eng : '-',
+      'title_rus'       => !empty($_POST['title_rus']) ? $request->title_rus : '-',
+    ];
 
-    $user->products()->save($product);
+    if (!empty($_POST['parent_id']))
+      $data['parent_id'] = (int)$request->parent_id;
 
-    echo 'product created';
-    exit;
+    Catalog::create($data);
+    return redirect()->route('manage.add-catalog');
   }
 }

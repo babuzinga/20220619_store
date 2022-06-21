@@ -10,6 +10,8 @@ class Product extends Model
 {
   use HasFactory;
 
+  protected $fillable = ['title', 'price', 'catalog_id', 'user_id'];
+
   /**
    * Извлечение владельца задачи (связь инверсия один ко многим)
    * https://laravel.com/docs/8.x/eloquent-relationships#one-to-many-inverse

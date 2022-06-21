@@ -2,6 +2,6 @@
 
 @section('title', 'Detail')
 
-@section('main')
+@section('content')
   111
 @endsection('main')

@@ -13,19 +13,12 @@ class ProductsController extends Controller
    */
   public function index()
   {
-      $products = ['products' => Product::latest()->get()];
-      //echo '<pre>', print_r($products, 1), '</pre>'; exit();
-      return view('products/index', $products);
+    $products = ['products' => Product::latest()->get()];
+    return view('products/index', $products);
   }
 
   public function detail(Product $product)
   {
     return view('products/detail', $product);
-  }
-
-  public function products_user(User $user)
-  {
-    $products = ['products' => $user->products];
-    return view('products/index', $products);
   }
 }

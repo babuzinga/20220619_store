@@ -2,9 +2,9 @@
 
 @section('title', 'Products')
 
-@section('main')
+@section('content')
   @if(count($products))
-    <table>
+    <table class="table mt-5">
       <thead>
         <th>ID</th>
         <th>Title</th>
