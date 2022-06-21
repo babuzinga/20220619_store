@@ -33,6 +33,6 @@
     @endif
 
     <button type="submit" class="btn btn-primary">Save</button>
-    <a href="{{ route('product.index') }}" class="btn btn-link">Back</a>
+    <a href="{{ route('manage.catalogs') }}" class="btn btn-link">Back</a>
   </form>
 @endsection

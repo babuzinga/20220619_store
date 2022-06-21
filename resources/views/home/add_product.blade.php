@@ -16,16 +16,16 @@
     </div>
 
     @if(count($catalogs))
-    <div class="input-group mb-5">
-      <label class="input-group-text" for="product_catalog">Catalog</label>
-      <select name="catalog_id"  class="form-select" id="product_catalog">
-        <option selected="">Choose...</option>
+      <div class="input-group mb-5">
+        <label class="input-group-text" for="product_catalog">Catalog</label>
+        <select name="catalog_id" class="form-select" id="product_catalog">
+          <option value="0" selected="">Choose...</option>
 
-        @foreach($catalogs as $key => $catalog)
-        <option value="{{ $catalog->id }}">{{ $catalog->title_rus }}</option>
-        @endforeach
-      </select>
-    </div>
+          @foreach($catalogs as $key => $catalog)
+            <option value="{{ $catalog->id }}">{{ $catalog->title_rus }}</option>
+          @endforeach
+        </select>
+      </div>
     @else
       <div class="input-group mb-5">
         Catalogs not found

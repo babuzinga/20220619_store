@@ -18,10 +18,8 @@ class CreateProductsTables extends Migration
       $table->id('id');
       $table->string('title');
       $table->float('price');
-      //$table->bigInteger('cat_id')->unsigned()->nullable();
-      //$table->foreign('cat_id')->references('id')->on('catalogs')->onUpdate('cascade')->onDelete('cascade');
-      $table->foreignId('catalog_id')->constrained()->onDelete('cascade');
-      $table->foreignId('user_id')->constrained()->onDelete('cascade');
+      $table->foreignId('catalog_id')->nullable()->constrained()->onDelete('restrict');
+      $table->foreignId('user_id')->constrained()->onDelete('restrict');
       $table->timestamps();
     });
 

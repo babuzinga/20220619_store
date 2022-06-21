@@ -21,6 +21,7 @@
               <th>ID</th>
               <th>Title</th>
               <th>Price</th>
+              <th>Catalog</th>
               <th>Actions</th>
               </thead>
               <tbody>
@@ -29,6 +30,7 @@
                   <td>{{ $product->id }}</td>
                   <td><a href="{{ route('product.detail', ['product' => $product->id]) }}">{{ $product->title }}</a></td>
                   <td>{{ $product->price }}</td>
+                  <td>{{ !empty($product->catalog) ? $product->catalog->title_rus : '-' }}</td>
                   <td>
                     <a href="{{ route('home.edit-product', ['product' => $product->id]) }}">Edit</a> /
                     <a href="{{ route('home.delete-product', ['product' => $product->id]) }}">Remove</a>
