@@ -50,7 +50,7 @@ class HomeController extends Controller
   public function add_product()
   {
     $catalogs = Catalog::all();
-    return view('home/add_product', ['catalogs' => $catalogs]);
+    return view('home/add_edit_product', ['catalogs' => $catalogs, 'title' => 'Add product']);
   }
 
   /**
@@ -79,7 +79,7 @@ class HomeController extends Controller
   public function edit_product(Product $product)
   {
     $catalogs = Catalog::all();
-    return view('home/edit_product', ['product' => $product, 'catalogs' => $catalogs]);
+    return view('home/add_edit_product', ['product' => $product, 'catalogs' => $catalogs, 'title' => 'Edit product']);
   }
 
   /**

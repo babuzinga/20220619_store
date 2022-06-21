@@ -37,8 +37,8 @@ Route::name('home.')->group(function () {
   Route::get('/home',                                 [HomeController::class, 'index'])->name('index');
   Route::get('/home/add-product',                     [HomeController::class, 'add_product'])->name('add-product');
   Route::post('/home/save-product',                   [HomeController::class, 'save_product'])->name('save-product');
-  Route::get('/home/edit-product/{product}',          [HomeController::class, 'edit_product'])->name('edit-product');
-  Route::patch('/home/update-product/{product}',      [HomeController::class, 'update_product'])->name('update-product');
-  Route::get('/home/delete-product/{product}',        [HomeController::class, 'delete_product'])->name('delete-product');
-  Route::delete('/home/destroy-product/{product}',    [HomeController::class, 'destroy_product'])->name('destroy-product');
+  Route::get('/home/edit-product/{product}',          [HomeController::class, 'edit_product'])->name('edit-product')->middleware('can:update,product');
+  Route::patch('/home/update-product/{product}',      [HomeController::class, 'update_product'])->name('update-product')->middleware('can:update,product');
+  Route::get('/home/delete-product/{product}',        [HomeController::class, 'delete_product'])->name('delete-product')->middleware('can:destroy,product');
+  Route::delete('/home/destroy-product/{product}',    [HomeController::class, 'destroy_product'])->name('destroy-product')->middleware('can:destroy,product');
 });

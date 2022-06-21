@@ -28,13 +28,14 @@
       @guest
         <a href="{{ route('login') }}" class="btn btn-outline-primary me-2">Login</a>
         <a href="{{ route('register') }}" class="btn btn-primary">Reg</a>
-      @else
+      @endguest
+      @auth
         <a href="{{ route('home.index') }}" class="btn btn-outline-primary me-2">{{ Auth::user()->name }}</a>
         <button type="button" class="btn btn-primary" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</button>
         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
           @csrf
         </form>
-      @endguest
+      @endauth
     </div>
   </header>
 </div>
