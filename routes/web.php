@@ -18,7 +18,6 @@ use App\Http\Controllers\ProductsController;
 
 Route::name('product.')->group(function () {
   Route::get('/',                                     [ProductsController::class, 'index'])->name('index');
-  Route::get('/products/user/{user}',                 [ProductsController::class, 'products_user'])->name('users');
   Route::get('/product/{product}',                    [ProductsController::class, 'detail'])->name('detail');
 });
 

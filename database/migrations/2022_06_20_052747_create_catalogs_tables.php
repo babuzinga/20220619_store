@@ -18,7 +18,7 @@ class CreateCatalogsTables extends Migration
       $table->string('title_eng');
       $table->string('title_rus');
       $table->bigInteger('parent_id')->unsigned()->nullable();
-      $table->foreign('parent_id')->references('id')->on('catalogs')->onUpdate('cascade')->onDelete('cascade');
+      $table->foreign('parent_id')->references('id')->on('catalogs')->onUpdate('restrict')->onDelete('restrict');
       $table->timestamps();
     });
 
