@@ -18,7 +18,6 @@
           @if(count($products))
             <table class="table">
               <thead>
-              <th>ID</th>
               <th>Title</th>
               <th>Price</th>
               <th>Catalog</th>
@@ -27,10 +26,15 @@
               <tbody>
               @foreach($products as $key => $product)
                 <tr>
-                  <td>{{ $product->id }}</td>
                   <td><a href="{{ route('product.detail', ['product' => $product->id]) }}">{{ $product->title }}</a></td>
                   <td>{{ $product->price }}</td>
-                  <td>{{ !empty($product->catalog) ? $product->catalog->title_rus : '-' }}</td>
+                  <td>
+                    @if(!empty($product->catalog))
+                      <a href="{{ route('product.catalog', ['catalog' => $product->catalog->id]) }}">{{ $product->catalog->title }}</a>
+                    @else
+                      -
+                    @endif
+                  </td>
                   <td>
                     <a href="{{ route('home.edit-product', ['product' => $product->id]) }}">Edit</a> /
                     <a href="{{ route('home.delete-product', ['product' => $product->id]) }}">Remove</a>

@@ -14,19 +14,19 @@ class CreateCatalogsTables extends Migration
   public function up()
   {
     Schema::create('catalogs', function (Blueprint $table) {
-      $table->id('id');
-      $table->string('title_eng');
-      $table->string('title_rus');
-      $table->bigInteger('parent_id')->unsigned()->nullable();
-      $table->foreign('parent_id')->references('id')->on('catalogs')->onUpdate('restrict')->onDelete('restrict');
+      $table->uuid('id')->primary();
+      $table->string('title');
+      $table->char('parent_id', 36)->nullable();
       $table->timestamps();
     });
 
-    /*DB::table('catalogs')->insert([
-      ['title_eng' => 'Not set',     'title_rus' => 'Не задан',  'created_at' => '2022-06-20 16:12:36'],
-    ]);*/
-
-    DB::statement("ALTER TABLE catalogs AUTO_INCREMENT = 100000;");
+    DB::statement("
+      ALTER TABLE `catalogs` 
+      ADD CONSTRAINT `catalogs_parent_id_foreign` 
+      FOREIGN KEY (`parent_id`) 
+      REFERENCES `catalogs` (`id`) 
+      ON UPDATE RESTRICT ON DELETE RESTRICT;
+    ");
   }
 
   /**

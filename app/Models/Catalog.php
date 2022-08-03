@@ -9,7 +9,11 @@ class Catalog extends Model
 {
   use HasFactory;
 
-  protected $fillable = ['title_eng', 'title_rus', 'parent_id'];
+  protected $fillable = ['id', 'title', 'parent_id'];
+
+  // Для корректной работы с id - в котором используются uuid
+  protected $keyType = 'char';
+  public $incrementing = false;
 
   public function products()
   {

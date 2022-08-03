@@ -19,6 +19,7 @@ use App\Http\Controllers\ProductsController;
 Route::name('product.')->group(function () {
   Route::get('/',                                     [ProductsController::class, 'index'])->name('index');
   Route::get('/product/{product}',                    [ProductsController::class, 'detail'])->name('detail');
+  Route::get('/catalog/{catalog}',                    [ProductsController::class, 'catalog'])->name('catalog');
 });
 
 Route::name('manage.')->group(function () {

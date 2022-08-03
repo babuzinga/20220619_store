@@ -6,6 +6,7 @@ use App\Models\Catalog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 /**
  * Class ManageController
@@ -28,7 +29,7 @@ class ManageController extends Controller
   public function add_catalog()
   {
     $catalogs = Catalog::all();
-    return view('manage/add_catalog', ['catalogs' => $catalogs]);
+    return view('manage/add_edit_catalog', ['catalogs' => $catalogs]);
   }
 
   /**
@@ -38,12 +39,10 @@ class ManageController extends Controller
   public function save_catalog(Request $request)
   {
     $data = [
-      'title_eng'       => !empty($_POST['title_eng']) ? $request->title_eng : '-',
-      'title_rus'       => !empty($_POST['title_rus']) ? $request->title_rus : '-',
+      'id'        => Str::uuid(),
+      'title'     => !empty($_POST['title']) ? $request->title : '-',
+      'parent_id' => empty($_POST['parent_id']) ? NULL : $request->parent_id,
     ];
-
-    if (!empty($_POST['parent_id']))
-      $data['parent_id'] = (int)$request->parent_id;
 
     Catalog::create($data);
     return redirect()->route('manage.catalogs');
@@ -56,7 +55,7 @@ class ManageController extends Controller
   public function edit_catalog(Catalog $catalog)
   {
     $catalogs = Catalog::all();
-    return view('manage/edit_catalog', ['catalog' => $catalog, 'catalogs' => $catalogs]);
+    return view('manage/add_edit_catalog', ['catalog' => $catalog, 'catalogs' => $catalogs]);
   }
 
   /**
@@ -67,12 +66,9 @@ class ManageController extends Controller
   public function update_catalog(Request $request, Catalog $catalog)
   {
     $data = [
-      'title_eng'       => !empty($_POST['title_eng']) ? $request->title_eng : '-',
-      'title_rus'       => !empty($_POST['title_rus']) ? $request->title_rus : '-',
+      'title'     => !empty($_POST['title']) ? $request->title : '-',
+      'parent_id' => empty($_POST['parent_id']) ? NULL : $request->parent_id,
     ];
-
-    if (!empty($_POST['parent_id']))
-      $data['parent_id'] = (int)$request->parent_id;
 
     $catalog->fill($data);
     $catalog->save();

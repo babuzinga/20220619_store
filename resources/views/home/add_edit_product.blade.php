@@ -38,12 +38,15 @@
       <div class="input-group mb-5">
         <label class="input-group-text" for="product_catalog">Catalog</label>
         <select name="catalog_id" class="form-select" id="product_catalog">
-          @if (empty($product) || empty($product->catalog_id))<option value="0" selected="">Choose...</option>@endif
+          @if (empty($product) || empty($product->catalog_id))<option value="" selected="">Choose...</option>@endif
 
           @foreach($catalogs as $key => $catalog)
-            <option value="{{ $catalog->id }}" @if (!empty($product) && $product->parent_id == $catalog->id) selected @endif>{{ $catalog->title_rus }}</option>
+            <option value="{{ $catalog->id }}" @if (!empty($product) && $product->catalog_id == $catalog->id) selected @endif>{{ $catalog->title }}</option>
           @endforeach
         </select>
+        @error('catalog_id')
+        <span class="invalid-feedback"><strong>{{ $message }}</strong></span>
+        @enderror
       </div>
     @else
       <div class="input-group mb-5">

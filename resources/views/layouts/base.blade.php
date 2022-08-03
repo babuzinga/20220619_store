@@ -19,8 +19,13 @@
 
     <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
       <li><a href="{{ route('product.index') }}" class="nav-link px-2 link-secondary">Home</a></li>
-      <li><a href="https://getbootstrap.com/docs/5.2/examples/" target="_blank" class="nav-link px-2 link-dark">Examples · Bootstrap v5.2</a></li>
-      <li><a href="#" class="nav-link px-2 link-dark">About</a></li>
+      <li><a href="https://getbootstrap.com/docs/5.2/examples/" target="_blank" class="nav-link px-2">Examples · Bootstrap v5.2</a></li>
+      <li><a href="#" class="nav-link px-2">About</a></li>
+      @auth
+      @if(Auth::user()->isAdmin())
+        <li class="mng-link"><a href="/manage/catalogs" class="nav-link px-2">Manage</a></li>
+      @endif
+      @endauth
     </ul>
 
     <div class="col-md-3 text-end">
@@ -30,7 +35,7 @@
         <a href="{{ route('register') }}" class="btn btn-primary">Reg</a>
       @endguest
       @auth
-        <a href="{{ route('home.index') }}" class="btn btn-outline-primary me-2">{{ Auth::user()->name }}</a>
+        <a href="{{ route('home.index') }}" class="btn btn-outline-primary me-2">{{ Auth::user()->getName() }}</a>
         <button type="button" class="btn btn-primary" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</button>
         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
           @csrf

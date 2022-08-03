@@ -15,15 +15,15 @@ class CreateProductsTables extends Migration
   {
     // https://laravel.com/docs/8.x/migrations#foreign-key-constraints
     Schema::create('products', function (Blueprint $table) {
-      $table->id('id');
+      $table->uuid('id')->primary();
       $table->string('title');
       $table->float('price');
-      $table->foreignId('catalog_id')->nullable()->constrained()->onDelete('restrict');
-      $table->foreignId('user_id')->constrained()->onDelete('restrict');
+      $table->foreignUuid('catalog_id')->nullable()->constrained()->onDelete('restrict');
+      $table->foreignUuid('user_id')->constrained()->onDelete('restrict');
       $table->timestamps();
     });
 
-    DB::statement("ALTER TABLE products AUTO_INCREMENT = 100000;");
+    //DB::statement("ALTER TABLE products AUTO_INCREMENT = 100000;");
 
     /*DB::table('products')->insert([
       ['title' => 'product 1', 'price' => 1111, 'cat_id' => '100000', 'user_id' => '',],

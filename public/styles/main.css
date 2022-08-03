@@ -2,3 +2,8 @@
   max-width: 960px;
   padding: 0 15px;
 }
+
+.mng-link,
+.mng-link a {
+  color: #ca0a0a !important;
+}

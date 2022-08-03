@@ -19,9 +19,12 @@ class User extends Authenticatable
    * @var array<int, string>
    */
   protected $fillable = [
+    'id',
+    'role',
     'name',
     'email',
     'password',
+    'desc',
   ];
 
   /**
@@ -33,6 +36,10 @@ class User extends Authenticatable
     'password',
     'remember_token',
   ];
+
+  // Для корректной работы с id - в котором используются uuid
+  protected $keyType = 'char';
+  public $incrementing = false;
 
   /**
    * The attributes that should be cast.
@@ -51,5 +58,15 @@ class User extends Authenticatable
   public function products()
   {
     return $this->hasMany(Product::class);
+  }
+
+  public function isAdmin()
+  {
+    return !empty($this->role) && $this->role === 'admin';
+  }
+
+  public function getName()
+  {
+    return !empty($this->name) ? $this->name : 'Undefined';
   }
 }

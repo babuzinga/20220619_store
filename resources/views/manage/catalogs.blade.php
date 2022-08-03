@@ -6,17 +6,15 @@
   @if(count($catalogs))
     <table class="table mt-5">
       <thead>
-      <th>ID</th>
-      <th>Title eng</th>
-      <th>Title rus</th>
+      <th>Title</th>
+      <th>Products</th>
       <th>Actions</th>
       </thead>
       <tbody>
       @foreach($catalogs as $key => $catalog)
         <tr>
-          <td>{{ $catalog->id }}</td>
-          <td>{{ $catalog->title_eng }}</td>
-          <td>{{ $catalog->title_rus }}</td>
+          <td>{{ $catalog->title }}</td>
+          <td>0</td>
           <td>
             <a href="{{ route('manage.edit-catalog', ['catalog' => $catalog->id]) }}">Edit</a> /
             <a href="{{ route('manage.delete-catalog', ['catalog' => $catalog->id]) }}">Remove</a>

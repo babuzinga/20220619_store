@@ -11,7 +11,11 @@ class Product extends Model
 {
   use HasFactory;
 
-  protected $fillable = ['title', 'price', 'catalog_id', 'user_id'];
+  protected $fillable = ['id', 'title', 'price', 'catalog_id', 'user_id'];
+
+  // Для корректной работы с id - в котором используются uuid
+  protected $keyType = 'char';
+  public $incrementing = false;
 
   /**
    * Извлечение владельца задачи (связь инверсия один ко многим)
