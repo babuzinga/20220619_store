@@ -17,7 +17,9 @@ class CreateCatalogsTables extends Migration
       $table->uuid('id')->primary();
       $table->string('title');
       $table->char('parent_id', 36)->nullable();
+      $table->tinyInteger('status')->default(1)->comment('0-delete / 1-active / 2-block');
       $table->timestamps();
+      $table->softDeletes();
     });
 
     DB::statement("

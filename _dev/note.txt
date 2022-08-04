@@ -2,17 +2,17 @@
 + uuid вместо id
 + Разграничение прав пользователя (role=user,admin)
 + Добавления поля desc для занесения комментарий
++ status
 
 
 
 Товары
 + uuid вместо id
-- image_preview / image_cnt / desc / status
--
++ image_preview / image_cnt / desc / status
 
 
 
 Каталог
 + uuid вместо id
-- страницу каталога с товарами
-- products_cnt
++ страницу каталога с товарами
++ products_cnt / status

@@ -17,10 +17,16 @@ class CreateProductsTables extends Migration
     Schema::create('products', function (Blueprint $table) {
       $table->uuid('id')->primary();
       $table->string('title');
+      $table->string('desc', 500);
+      $table->string('image_preview');
+      $table->integer('image_cnt')->default(0);
       $table->float('price');
       $table->foreignUuid('catalog_id')->nullable()->constrained()->onDelete('restrict');
       $table->foreignUuid('user_id')->constrained()->onDelete('restrict');
+      $table->integer('products_cnt')->default(0);
+      $table->tinyInteger('status')->default(1)->comment('0-delete / 1-active / 2-block');
       $table->timestamps();
+      $table->softDeletes();
     });
 
     //DB::statement("ALTER TABLE products AUTO_INCREMENT = 100000;");

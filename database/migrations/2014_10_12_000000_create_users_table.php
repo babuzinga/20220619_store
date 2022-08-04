@@ -21,8 +21,10 @@ class CreateUsersTable extends Migration
       $table->timestamp('email_verified_at')->nullable();
       $table->string('password');
       $table->string('desc')->default('');
+      $table->tinyInteger('status')->default(1)->comment('0-delete / 1-active / 2-block');
       $table->rememberToken();
       $table->timestamps();
+      $table->softDeletes();
     });
   }
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Catalog;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -20,5 +21,10 @@ class ProductsController extends Controller
   public function detail(Product $product)
   {
     return view('products/detail', $product);
+  }
+
+  public function catalog(Catalog $catalog)
+  {
+    return view('products/catalog', ['products' => $catalog->products, 'title' => "Catalog: {$catalog->title}"]);
   }
 }
