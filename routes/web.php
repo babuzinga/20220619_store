@@ -22,7 +22,7 @@ Route::name('product.')->group(function () {
   Route::get('/catalog/{catalog}',                    [ProductsController::class, 'catalog'])->name('catalog');
 });
 
-Route::name('manage.')->group(function () {
+Route::group(['as' => 'manage.', 'middleware' => ['admin']], function () {
   Route::get('/manage/catalogs',                      [ManageController::class, 'catalogs'])->name('catalogs');
   Route::get('/manage/add-catalog',                   [ManageController::class, 'add_catalog'])->name('add-catalog');
   Route::post('/manage/save-catalog',                 [ManageController::class, 'save_catalog'])->name('save-catalog');
