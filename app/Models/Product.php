@@ -6,10 +6,12 @@ use App\Models\User;
 use App\Models\Catalog;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
 {
   use HasFactory;
+  use SoftDeletes;
 
   protected $fillable = ['id', 'title', 'price', 'catalog_id', 'user_id'];
 

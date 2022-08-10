@@ -115,6 +115,11 @@ class HomeController extends Controller
   public function destroy_product(Product $product)
   {
     $product->delete();
+    // Поскольку в модели установлено "мягкое" удаление записей,
+    // восстановление записей доступно через
+    // $product->restore();
+    // Полное удаление записи
+    // $product->forceDelete();
     return redirect()->route('home.index');
   }
 }

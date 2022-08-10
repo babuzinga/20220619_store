@@ -17,7 +17,7 @@ class CreateProductsTables extends Migration
     Schema::create('products', function (Blueprint $table) {
       $table->uuid('id')->primary();
       $table->string('title');
-      $table->string('desc', 500);
+      $table->string('desc', 500)->default('');;
       $table->string('image_preview');
       $table->integer('image_cnt')->default(0);
       $table->float('price');
@@ -25,6 +25,7 @@ class CreateProductsTables extends Migration
       $table->foreignUuid('user_id')->constrained()->onDelete('restrict');
       $table->integer('products_cnt')->default(0);
       $table->tinyInteger('status')->default(1)->comment('0-delete / 1-active / 2-block');
+      $table->char('flag', 1)->default(0);
       $table->timestamps();
       $table->softDeletes();
     });
