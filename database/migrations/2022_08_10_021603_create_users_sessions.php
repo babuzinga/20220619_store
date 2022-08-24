@@ -17,6 +17,7 @@ class CreateUsersSessions extends Migration
       $table->foreignUuid('user_id')->constrained()->onDelete('restrict');
       $table->enum('action', ['logon', 'logout'])->default('logon');
       $table->string('ip', 40);
+      $table->string('ua');
       $table->timestamp('dt')->useCurrent();
     });
   }

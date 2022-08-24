@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Models\Product;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -24,7 +23,7 @@ class User extends Authenticatable
     'id',
     'role',
     'name',
-    'email',
+    'phone',
     'password',
     'desc',
   ];
@@ -42,15 +41,6 @@ class User extends Authenticatable
   // Для корректной работы с id - в котором используются uuid
   protected $keyType = 'char';
   public $incrementing = false;
-
-  /**
-   * The attributes that should be cast.
-   *
-   * @var array<string, string>
-   */
-  protected $casts = [
-    'email_verified_at' => 'datetime',
-  ];
 
   /**
    * Вернет все продукты созданные пользователем (связь один ко многим)
