@@ -1,0 +1,5 @@
+Запуск миграции в первый раз
+php artisan migrate
+
+Обновление
+php artisan migrate:refresh
