@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ManageController;
 use App\Http\Controllers\ProductsController;
@@ -16,6 +17,8 @@ use App\Http\Controllers\ProductsController;
 |
 */
 
+// php artisan route:cache
+
 Route::name('product.')->group(function () {
   Route::get('/',                                     [ProductsController::class, 'index'])->name('index');
   Route::get('/product/{product}',                    [ProductsController::class, 'detail'])->name('detail');
@@ -30,9 +33,15 @@ Route::group(['as' => 'manage.', 'middleware' => ['admin']], function () {
   Route::patch('/manage/update-catalog/{catalog}',    [ManageController::class, 'update_catalog'])->name('update-catalog');
   Route::get('/manage/delete-catalog/{catalog}',      [ManageController::class, 'delete_catalog'])->name('delete-catalog');
   Route::delete('/manage/destroy-catalog/{catalog}',  [ManageController::class, 'destroy_catalog'])->name('destroy-catalog');
+
+
 });
 
-Auth::routes();
+Route::get('/login',                                  [AuthController::class, 'index'])->name('login');
+Route::post('/code/login',                            [AuthController::class, 'login'])->name('login_code');
+Route::post('/check/login',                           [AuthController::class, 'login'])->name('login_check');
+Route::post('/signup',                                [AuthController::class, 'signUp'])->name('signup');
+Route::post('/signout',                               [AuthController::class, 'signOut'])->name('signout');
 
 Route::name('home.')->group(function () {
   Route::get('/home',                                 [HomeController::class, 'index'])->name('index');

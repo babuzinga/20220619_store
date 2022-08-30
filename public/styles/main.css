@@ -7,3 +7,7 @@
 .mng-link a {
   color: #ca0a0a !important;
 }
+
+#auth_timer_resend > span { display: none; }
+#auth_timer_resend.timer > button { display: none; }
+#auth_timer_resend.timer > span { display: block; }

@@ -32,12 +32,11 @@
       <!-- Authentication Links -->
       @guest
         <a href="{{ route('login') }}" class="btn btn-outline-primary me-2">Login</a>
-        <a href="{{ route('register') }}" class="btn btn-primary">Reg</a>
       @endguest
       @auth
         <a href="{{ route('home.index') }}" class="btn btn-outline-primary me-2">{{ Auth::user()->getName() }}</a>
         <button type="button" class="btn btn-primary" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</button>
-        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+        <form id="logout-form" action="{{ route('signout') }}" method="POST" class="d-none">
           @csrf
         </form>
       @endauth
@@ -73,5 +72,6 @@
 </footer>
 
 <script src="/js/bootstrap.bundle.min.js"></script>
+<script src="{{ asset('js/app2.js') }}" defer></script>
 </body>
 </html>
