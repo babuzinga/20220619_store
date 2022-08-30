@@ -28,18 +28,14 @@ class ProductsController extends Controller
    */
   public function index()
   {
+    // https://themepure.net/template/mazia/single-product-3.html
     $products = ['products' => Product::latest()->get()];
     return view('products/index', $products);
   }
 
   public function detail(Product $product)
   {
-    return view('products/detail', $product);
-  }
-
-  public function catalog(Catalog $catalog)
-  {
-    return view('products/catalog', ['products' => $catalog->products, 'title' => "Catalog: {$catalog->title}"]);
+    return view('products/detail', ['product' => $product]);
   }
 
 

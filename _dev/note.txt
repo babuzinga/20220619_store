@@ -14,6 +14,7 @@
 + uuid вместо id
 + image_preview / image_cnt / desc / status
 + discount (скидка)
+- просмотры
 
 
 
@@ -40,3 +41,9 @@
 Логика
 1.  покупка 5 товаров по цене 200 руб. (партия - consignment)
 2.
+
+
+
+
+
+

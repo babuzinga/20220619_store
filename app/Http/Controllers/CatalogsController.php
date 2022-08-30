@@ -9,6 +9,16 @@ use Illuminate\Support\Str;
 
 class CatalogsController extends Controller
 {
+
+  /**
+   * @param Catalog $catalog
+   * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+   */
+  public function catalog(Catalog $catalog)
+  {
+    return view('catalogs/catalog', ['products' => $catalog->products, 'title' => $catalog->title]);
+  }
+
   /**
    * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
    */

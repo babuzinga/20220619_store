@@ -46,4 +46,24 @@ class Product extends Model
   {
     return $this->belongsTo(Catalog::class);
   }
+
+  public function getTitle()
+  {
+    return $this->title;
+  }
+
+  public function getDesc()
+  {
+    return $this->desc;
+  }
+
+  public function getPreview()
+  {
+    return !empty($this->image_preview) ? '/public/images/' . $this->image_preview : '/public/images/no-photo.png';
+  }
+
+  public function getPrice()
+  {
+    return $this->price;
+  }
 }

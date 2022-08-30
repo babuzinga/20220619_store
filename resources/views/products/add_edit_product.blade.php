@@ -29,6 +29,7 @@
         <textarea
             id="inputDesc"
             class="form-control"
+            name="desc"
             rows="3"
         >{{ old('desc', !empty($product) ? $product->desc : '') }}</textarea>
       </div>

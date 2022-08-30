@@ -6,8 +6,9 @@
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="/styles/bootstrap.min.css">
+  <link rel="stylesheet" href="/fonts/rubik.css">
   <link rel="stylesheet" href="/styles/main.css">
-  <title>@yield('title') :: {{ config('app.name', 'Laravel') }}</title>
+  <title>@hasSection('title') @yield('title') - @endif{{ config('app.name', 'Laravel') }}</title>
 </head>
 <body class="d-flex flex-column h-100">
 
@@ -17,26 +18,15 @@
       jinimin.store
     </a>
 
-    <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-      <li><a href="{{ route('product.index') }}" class="nav-link px-2 link-secondary">Home</a></li>
-      <li><a href="https://getbootstrap.com/docs/5.2/examples/" target="_blank" class="nav-link px-2">Examples · Bootstrap v5.2</a></li>
-      <li><a href="#" class="nav-link px-2">About</a></li>
-      @auth
-      @if(Auth::user()->isAdmin())
-        <li class="mng-link"><a href="{{ route('manage.stoke') }}" class="nav-link px-2">Manage</a></li>
-      @endif
-      @endauth
-    </ul>
-
     <div class="col-md-3 text-end">
       <!-- Authentication Links -->
       @guest
-        <a href="{{ route('login') }}" class="btn btn-outline-primary me-2">Login</a>
+        <a href="{{ route('auth.login') }}" class="btn btn-outline-primary me-2">Login</a>
       @endguest
       @auth
         <a href="{{ route('home.index') }}" class="btn btn-outline-primary me-2">{{ Auth::user()->getName() }}</a>
         <button type="button" class="btn btn-primary" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</button>
-        <form id="logout-form" action="{{ route('signout') }}" method="POST" class="d-none">
+        <form id="logout-form" action="{{ route('auth.signout') }}" method="POST" class="d-none">
           @csrf
         </form>
       @endauth
@@ -45,9 +35,11 @@
 </div>
 
 <!-- Begin page content -->
-<main class="flex-shrink-0">
+<main class="flex-shrink-0 mb-5">
   <div class="container">
-    <h1 class="mt-5">@yield('title')</h1>
+    @hasSection('title')
+      <h1 class="mt-4">@yield('title')</h1>
+    @endif
 
     {{--<br>
     <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
@@ -64,7 +56,14 @@
 
 <footer class="footer mt-auto py-3 bg-light">
   <div class="container">
-    Hello (> <) !!!
+    © 2022 {{ config('app.name', 'Laravel') }}
+
+    @auth
+      @if(Auth::user()->isAdmin())
+      &ndash; <a href="{{ route('manage.stoke') }}">[ manage ]</a>
+      @endif
+    @endauth
+
     @env('local')
     <span class="float-end text-muted">Laravel v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }})</span>
     @endenv

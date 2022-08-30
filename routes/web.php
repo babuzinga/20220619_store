@@ -6,6 +6,7 @@ use App\Http\Controllers\CatalogsController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ManageController;
 use App\Http\Controllers\ProductsController;
+use App\Http\Controllers\StoreController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,11 +22,15 @@ use App\Http\Controllers\ProductsController;
 // php artisan route:list
 // php artisan route:cache
 
-Route::get('/login',                          [AuthController::class, 'index'])->name('login');
-Route::post('/code/login',                    [AuthController::class, 'login'])->name('login_code');
-Route::post('/check/login',                   [AuthController::class, 'login'])->name('login_check');
-Route::post('/signup',                        [AuthController::class, 'signUp'])->name('signup');
-Route::post('/signout',                       [AuthController::class, 'signOut'])->name('signout');
+Route::get('/about',                          [StoreController::class, 'about'])->name('about');
+
+Route::name('auth.')->group(function () {
+  Route::get('/login',                        [AuthController::class, 'index'])->name('login');
+  Route::post('/code/login',                  [AuthController::class, 'login'])->name('login_code');
+  Route::post('/check/login',                 [AuthController::class, 'login'])->name('login_check');
+  Route::post('/signup',                      [AuthController::class, 'signUp'])->name('signup');
+  Route::post('/signout',                     [AuthController::class, 'signOut'])->name('signout');
+});
 
 Route::name('catalog.')->group(function () {
   // https://www.codecheef.org/article/laravel-gate-and-policy-example-from-scratch
@@ -35,6 +40,8 @@ Route::name('catalog.')->group(function () {
   Route::patch('/catalog/update/{catalog}',   [CatalogsController::class, 'update_catalog'])->name('update-catalog')->middleware('can:isAdmin');
   Route::get('/catalog/delete/{catalog}',     [CatalogsController::class, 'delete_catalog'])->name('delete-catalog')->middleware('can:isAdmin');
   Route::delete('/catalog/destroy/{catalog}', [CatalogsController::class, 'destroy_catalog'])->name('destroy-catalog')->middleware('can:isAdmin');
+
+  Route::get('/catalog/{catalog}',            [CatalogsController::class, 'catalog'])->name('index');
 });
 
 Route::name('product.')->group(function () {
@@ -47,7 +54,6 @@ Route::name('product.')->group(function () {
 
   Route::get('/',                             [ProductsController::class, 'index'])->name('index');
   Route::get('/product/{product}',            [ProductsController::class, 'detail'])->name('detail');
-  Route::get('/catalog/{catalog}',            [ProductsController::class, 'catalog'])->name('catalog');
 });
 
 Route::name('home.')->group(function () {

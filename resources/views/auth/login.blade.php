@@ -35,7 +35,7 @@
                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
 
-                    <form method="post" action="{{ route('signup') }}" name="auth">
+                    <form method="post" action="{{ route('auth.signup') }}" name="auth">
                       <div class="modal-body">
                         <input type="hidden" name="phone">
                         @csrf

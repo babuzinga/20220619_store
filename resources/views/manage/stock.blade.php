@@ -53,7 +53,7 @@
           <td>{{ $product->price }}</td>
           <td>
             @if(!empty($product->catalog))
-              <a href="{{ route('product.catalog', ['catalog' => $product->catalog->id]) }}">{{ $product->catalog->title }}</a>
+              <a href="{{ route('catalog.index', ['catalog' => $product->catalog->id]) }}">{{ $product->catalog->title }}</a>
             @else
               -
             @endif
