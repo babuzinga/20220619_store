@@ -1,9 +1,9 @@
-let xhr = new XMLHttpRequest();
+const xhr = new XMLHttpRequest();
 
 
 
 // ================================================================================================================== //
-let sendCodeAuthBlock = document.getElementById("sendCodeAuth");
+const sendCodeAuthBlock = document.getElementById("sendCodeAuth");
 if (sendCodeAuthBlock) {
   let sendCodeAuth = new bootstrap.Modal(sendCodeAuthBlock, {}), target, phone, token, code, response;
   let authTimerResend = document.getElementById("auth_timer_resend"), authTimerId;
@@ -41,7 +41,6 @@ if (sendCodeAuthBlock) {
         xhr.onload = function () {
           if (xhr.status === 200) {
             let json = JSON.parse(xhr.response);
-            console.log(json);
             if (json.r && json.r == 'send' && json.t) {
               sendCodeAuthBlock.querySelector('.response').textContent = json.t;
               phone.value = target.value;
@@ -71,11 +70,30 @@ if (sendCodeAuthBlock) {
           obj.classList.remove('timer');
         } else if (s) {
           s.textContent = --t;
-          console.log(t);
         }
       }, 1000);
     }
   }
+}
+// ================================================================================================================== //
+const inputImageProduct = document.getElementById('inputImageProduct');
+if (inputImageProduct) {
+  let uploadImageProduct = document.getElementById('upload_images_products'), preview, container1, container2;
+  inputImageProduct.addEventListener('change', function (e) {
+    uploadImageProduct.innerText = '';
+    if (e.target.files.length > 0) {
+      for (let i = 0; i < e.target.files.length; i++) {
+        preview = document.createElement('img');
+        container1 = document.createElement('div');
+        container2 = document.createElement('div');
+        preview.setAttribute('src', URL.createObjectURL(e.target.files[i]));
+        container1.setAttribute('class', 'img-thumbnail image2');
+        container2.appendChild(preview);
+        container1.appendChild(container2);
+        uploadImageProduct.appendChild(container1);
+      }
+    }
+  })
 }
 // ================================================================================================================== //
 

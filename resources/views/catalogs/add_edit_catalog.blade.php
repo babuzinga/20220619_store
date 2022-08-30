@@ -3,7 +3,7 @@
 @section('title', 'Add catalog')
 
 @section('content')
-  <form action="@if(!empty($catalog)){{ route('manage.update-catalog', ['catalog' => $catalog]) }}@else{{ route('manage.save-catalog') }}@endif" method="post" class="mt-5 col-md-6">
+  <form action="@if(!empty($catalog)){{ route('catalog.update-catalog', ['catalog' => $catalog]) }}@else{{ route('catalog.save-catalog') }}@endif" method="post" class="mt-5 col-md-6">
     @csrf
     @if(!empty($catalog)) @method('PATCH') @endif
     <div class="input-group mb-3">
@@ -38,6 +38,6 @@
     @endif
 
     <button type="submit" class="btn btn-primary">Save</button>
-    <a href="{{ route('manage.catalogs') }}" class="btn btn-link">Back</a>
+    <a href="{{ route('manage.stoke') }}" class="btn btn-link">Back</a>
   </form>
 @endsection

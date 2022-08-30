@@ -4,16 +4,16 @@
 + Добавления поля desc для занесения комментарий
 + status
 + регистрация по номеру телефона
-- email
-- telegram
-- telegram_chat_id
++ email
++ telegram
++ telegram_chat_id
 
 
 
 Товары
 + uuid вместо id
 + image_preview / image_cnt / desc / status
-- discount (скидка)
++ discount (скидка)
 
 
 
@@ -21,7 +21,11 @@
 + uuid вместо id
 + страницу каталога с товарами
 + products_cnt / status
-- discount (скидка)
++ discount (скидка)
+
+
+
+Изображения
 
 
 

@@ -73,6 +73,11 @@ class User extends Authenticatable
     return !empty($this->role) && $this->role === 'admin';
   }
 
+  public function isUser()
+  {
+    return !empty($this->role) && $this->role === 'user';
+  }
+
   /**
    * Формирование имени пользователя
    * @return mixed|string

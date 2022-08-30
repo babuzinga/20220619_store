@@ -23,7 +23,7 @@
       <li><a href="#" class="nav-link px-2">About</a></li>
       @auth
       @if(Auth::user()->isAdmin())
-        <li class="mng-link"><a href="/manage/catalogs" class="nav-link px-2">Manage</a></li>
+        <li class="mng-link"><a href="{{ route('manage.stoke') }}" class="nav-link px-2">Manage</a></li>
       @endif
       @endauth
     </ul>

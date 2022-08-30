@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CatalogsController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ManageController;
 use App\Http\Controllers\ProductsController;
@@ -17,38 +18,48 @@ use App\Http\Controllers\ProductsController;
 |
 */
 
+// php artisan route:list
 // php artisan route:cache
 
+Route::get('/login',                          [AuthController::class, 'index'])->name('login');
+Route::post('/code/login',                    [AuthController::class, 'login'])->name('login_code');
+Route::post('/check/login',                   [AuthController::class, 'login'])->name('login_check');
+Route::post('/signup',                        [AuthController::class, 'signUp'])->name('signup');
+Route::post('/signout',                       [AuthController::class, 'signOut'])->name('signout');
+
+Route::name('catalog.')->group(function () {
+  // https://www.codecheef.org/article/laravel-gate-and-policy-example-from-scratch
+  Route::get('/catalog/add',                  [CatalogsController::class, 'add_catalog'])->name('add-catalog')->middleware('can:isAdmin');
+  Route::post('/catalog/save',                [CatalogsController::class, 'save_catalog'])->name('save-catalog')->middleware('can:isAdmin');
+  Route::get('/catalog/edit/{catalog}',       [CatalogsController::class, 'edit_catalog'])->name('edit-catalog')->middleware('can:isAdmin');
+  Route::patch('/catalog/update/{catalog}',   [CatalogsController::class, 'update_catalog'])->name('update-catalog')->middleware('can:isAdmin');
+  Route::get('/catalog/delete/{catalog}',     [CatalogsController::class, 'delete_catalog'])->name('delete-catalog')->middleware('can:isAdmin');
+  Route::delete('/catalog/destroy/{catalog}', [CatalogsController::class, 'destroy_catalog'])->name('destroy-catalog')->middleware('can:isAdmin');
+});
+
 Route::name('product.')->group(function () {
-  Route::get('/',                                     [ProductsController::class, 'index'])->name('index');
-  Route::get('/product/{product}',                    [ProductsController::class, 'detail'])->name('detail');
-  Route::get('/catalog/{catalog}',                    [ProductsController::class, 'catalog'])->name('catalog');
+  Route::get('/product/add',                  [ProductsController::class, 'add_product'])->name('add-product')->middleware('can:create,App\Product');
+  Route::post('/product/save',                [ProductsController::class, 'save_product'])->name('save-product')->middleware('can:create,App\Product');
+  Route::get('/product/edit/{product}',       [ProductsController::class, 'edit_product'])->name('edit-product')->middleware('can:update,product');
+  Route::patch('/product/update/{product}',   [ProductsController::class, 'update_product'])->name('update-product')->middleware('can:update,product');
+  Route::get('/product/delete/{product}',     [ProductsController::class, 'delete_product'])->name('delete-product')->middleware('can:destroy,product');
+  Route::delete('/product/destroy/{product}', [ProductsController::class, 'destroy_product'])->name('destroy-product')->middleware('can:destroy,product');
+
+  Route::get('/',                             [ProductsController::class, 'index'])->name('index');
+  Route::get('/product/{product}',            [ProductsController::class, 'detail'])->name('detail');
+  Route::get('/catalog/{catalog}',            [ProductsController::class, 'catalog'])->name('catalog');
 });
-
-Route::group(['as' => 'manage.', 'middleware' => ['admin']], function () {
-  Route::get('/manage/catalogs',                      [ManageController::class, 'catalogs'])->name('catalogs');
-  Route::get('/manage/add-catalog',                   [ManageController::class, 'add_catalog'])->name('add-catalog');
-  Route::post('/manage/save-catalog',                 [ManageController::class, 'save_catalog'])->name('save-catalog');
-  Route::get('/manage/edit-catalog/{catalog}',        [ManageController::class, 'edit_catalog'])->name('edit-catalog');
-  Route::patch('/manage/update-catalog/{catalog}',    [ManageController::class, 'update_catalog'])->name('update-catalog');
-  Route::get('/manage/delete-catalog/{catalog}',      [ManageController::class, 'delete_catalog'])->name('delete-catalog');
-  Route::delete('/manage/destroy-catalog/{catalog}',  [ManageController::class, 'destroy_catalog'])->name('destroy-catalog');
-
-
-});
-
-Route::get('/login',                                  [AuthController::class, 'index'])->name('login');
-Route::post('/code/login',                            [AuthController::class, 'login'])->name('login_code');
-Route::post('/check/login',                           [AuthController::class, 'login'])->name('login_check');
-Route::post('/signup',                                [AuthController::class, 'signUp'])->name('signup');
-Route::post('/signout',                               [AuthController::class, 'signOut'])->name('signout');
 
 Route::name('home.')->group(function () {
-  Route::get('/home',                                 [HomeController::class, 'index'])->name('index');
-  Route::get('/home/add-product',                     [HomeController::class, 'add_product'])->name('add-product');
-  Route::post('/home/save-product',                   [HomeController::class, 'save_product'])->name('save-product');
-  Route::get('/home/edit-product/{product}',          [HomeController::class, 'edit_product'])->name('edit-product')->middleware('can:update,product');
-  Route::patch('/home/update-product/{product}',      [HomeController::class, 'update_product'])->name('update-product')->middleware('can:update,product');
-  Route::get('/home/delete-product/{product}',        [HomeController::class, 'delete_product'])->name('delete-product')->middleware('can:destroy,product');
-  Route::delete('/home/destroy-product/{product}',    [HomeController::class, 'destroy_product'])->name('destroy-product')->middleware('can:destroy,product');
+  Route::get('/home',                         [HomeController::class, 'index'])->name('index');
+  Route::get('/home/update-info',             [HomeController::class, 'update_info'])->name('update-info');
 });
+
+
+
+
+
+Route::group(['as' => 'manage.', 'middleware' => ['admin']], function () {
+  Route::get('/manage',                       [ManageController::class, 'stock'])->name('stoke');
+});
+

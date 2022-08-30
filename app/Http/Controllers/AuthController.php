@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Session;
@@ -15,6 +16,9 @@ class AuthController extends Controller
 {
   public function index()
   {
+    if(Auth::check()) {
+      return redirect()->route('product.index');
+    }
     return view('auth.login', ['title' => 'Вход или регистрация']);
   }
 
@@ -78,6 +82,13 @@ class AuthController extends Controller
           if (!empty($user)) {
             if ($user->checkCode($code)) {
               $response = ['r' => 'success'];
+
+              DB::table('users_sessions')->insert([
+                'user_id' => $user->id,
+                'action' => 'logon',
+                'ip' => $request->ip(),
+                'ua' => $request->userAgent(),
+              ]);
             } else {
               $response = ['r' => 'error', 't' => 'Неверный код'];
             }
@@ -99,7 +110,7 @@ class AuthController extends Controller
 
     $credentials = $request->only('phone', 'code');
     if (Auth::attempt(['phone' => $credentials['phone'], 'password' => $credentials['code']])) {
-      return redirect()->intended('home.index')->withSuccess('Signed in');
+      return redirect()->route('product.index')->withSuccess('Signed in');
     }
 
     return redirect("login")->withSuccess('Phone or code details are not valid');
@@ -110,6 +121,6 @@ class AuthController extends Controller
     Session::flush();
     Auth::logout();
 
-    return Redirect('login');
+    return redirect()->route('product.index');
   }
 }

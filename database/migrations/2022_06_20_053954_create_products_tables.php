@@ -17,14 +17,15 @@ class CreateProductsTables extends Migration
     Schema::create('products', function (Blueprint $table) {
       $table->uuid('id')->primary();
       $table->string('title');
-      $table->string('desc', 500)->default('');;
-      $table->string('image_preview');
+      $table->string('desc', 500)->default('');
+      $table->string('image_preview')->nullable();
       $table->integer('image_cnt')->default(0);
       $table->float('price');
+      $table->float('discount')->default(0);
       $table->foreignUuid('catalog_id')->nullable()->constrained()->onDelete('restrict');
       $table->foreignUuid('user_id')->constrained()->onDelete('restrict');
-      $table->integer('products_cnt')->default(0);
-      $table->tinyInteger('status')->default(1)->comment('0-delete / 1-active / 2-block');
+      $table->integer('products_cnt')->default(1);
+      $table->enum('status', ['1', '2'])->default(1)->comment('1-active / 2-hidden');
       $table->char('flag', 1)->default(0);
       $table->timestamps();
       $table->softDeletes();

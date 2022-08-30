@@ -13,7 +13,20 @@ class Product extends Model
   use HasFactory;
   use SoftDeletes;
 
-  protected $fillable = ['id', 'title', 'price', 'catalog_id', 'user_id'];
+  protected $fillable = [
+    'id',
+    'title',
+    'desc',
+    'image_preview',
+    'image_cnt',
+    'price',
+    'discount',
+    'catalog_id',
+    'user_id',
+    'products_cnt',
+    'status',
+    'flag'
+  ];
 
   // Для корректной работы с id - в котором используются uuid
   protected $keyType = 'char';
