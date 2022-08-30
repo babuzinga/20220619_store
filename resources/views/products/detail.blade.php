@@ -20,7 +20,7 @@
     <div class="col-sm-7">
       {{--<h1>{{ $product->getTitle() }}</h1>--}}
       <div><span class="price-product">{{ $product->getPrice() }} &#8381;</span></div>
-      <div class="mt-3">{{ $product->getDesc() }}</div>
+      <div class="mt-3 desc2">{{ $product->getDesc() }}</div>
       <button type="button" class="btn btn-danger mt-4">В корзину</button>
     </div>
   </div>
