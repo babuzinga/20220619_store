@@ -9,7 +9,7 @@
             <h3 class="card-header text-center">Вход или регистрация</h3>
             <div class="card-body">
               <span class="form-group mb-3">
-                <input type="text" placeholder="Телефон" name="target" class="form-control" autocomplete="off" required autofocus>
+                <input type="text" placeholder="+7 (" name="target" class="form-control" autocomplete="off" required autofocus>
                 @if ($errors->has('phone'))
                   <span class="text-danger">{{ $errors->first('phone') }}</span>
                 @endif
@@ -50,7 +50,7 @@
                       </div>
                       <div class="modal-footer">
                         {{--<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>--}}
-                        <button type="button" class="btn btn-primary" id="sent_verified_code_auth">Войти</button>
+                        <button type="button" class="btn btn-primary" id="sent_verified_code_auth">Подтвердить</button>
                       </div>
                     </form>
                   </div>

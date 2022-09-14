@@ -87,9 +87,17 @@ class User extends Authenticatable
     return !empty($this->name) ? $this->name : 'Undefined';
   }
 
+  /**
+   * @return mixed
+   */
   public function getStatus()
   {
     return $this->status;
+  }
+
+  public function getId()
+  {
+    return $this->id;
   }
 
   /**

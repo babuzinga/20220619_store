@@ -19,6 +19,8 @@ class Product extends Model
     'desc',
     'image_preview',
     'image_cnt',
+    'views',
+    'sales',
     'price',
     'discount',
     'catalog_id',
@@ -45,6 +47,11 @@ class Product extends Model
   public function catalog()
   {
     return $this->belongsTo(Catalog::class);
+  }
+
+  public function files()
+  {
+    return $this->hasMany(File::class);
   }
 
   public function getTitle()

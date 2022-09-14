@@ -14,7 +14,7 @@
 + uuid вместо id
 + image_preview / image_cnt / desc / status
 + discount (скидка)
-- просмотры
++ просмотры / покупки
 
 
 
@@ -26,7 +26,9 @@
 
 
 
-Изображения
+Файлы
++ mime_type
+-
 
 
 

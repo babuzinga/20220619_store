@@ -20,6 +20,8 @@ class CreateProductsTables extends Migration
       $table->string('desc', 500)->default('');
       $table->string('image_preview')->nullable();
       $table->integer('image_cnt')->default(0);
+      $table->integer('views')->default(0);
+      $table->integer('sales')->default(0);
       $table->float('price');
       $table->float('discount')->default(0);
       $table->foreignUuid('catalog_id')->nullable()->constrained()->onDelete('restrict');

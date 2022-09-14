@@ -59,8 +59,8 @@
             @endif
           </td>
           <td>
-            <a href="{{ route('product.edit-product', ['product' => $product->id]) }}">Edit</a> /
-            <a href="{{ route('product.delete-product', ['product' => $product->id]) }}">Remove</a>
+            <a href="{{ route('product.edit', ['product' => $product->id]) }}">Edit</a> /
+            <a href="{{ route('product.delete', ['product' => $product->id]) }}">Remove</a>
           </td>
         </tr>
       @endforeach
@@ -70,5 +70,5 @@
     <br>Products not found<br>
   @endif
 
-  <a href="{{ route('product.add-product') }}" type="button" class="btn btn-primary mt-3 mb-5">Add product</a>
+  <a href="{{ route('product.add') }}" type="button" class="btn btn-primary mt-3 mb-5">Add product</a>
 @endsection('main')

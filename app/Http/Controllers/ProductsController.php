@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Catalog;
 use App\Models\Product;
-use App\Models\User;
+use App\Models\File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -119,5 +119,31 @@ class ProductsController extends Controller
     // Полное удаление записи
     // $product->forceDelete();
     return redirect()->route('manage.stoke');
+  }
+
+  /**
+   * Загрузка изображений
+   *
+   * https://www.tutsmake.com/laravel-8-file-upload-tutorial/
+   * @param Request $request
+   * @param Product $product
+   * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+   */
+  public function upload_file_product(Request $request, Product $product)
+  {
+    $validate = $request->validate(['file' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048']);
+
+    $filename = $request->file('file')->getClientOriginalName();
+    //$filename = time().'.'.$request->image->extension();
+    $path = $request->file('file')->store('public/storage/images', 'local');
+    $validate['id'] = Str::uuid();
+    $validate['filename'] = $filename;
+    $validate['path'] = $path;
+    $validate['mime_type'] = $request->file->getClientMimeType();
+    $validate['user_id'] = Auth::user()->getId();
+
+    $product->files()->create($validate);
+
+    return redirect()->route('product.edit', ['product' => $product])->with('status', 'File Has been uploaded successfully in laravel 8');
   }
 }

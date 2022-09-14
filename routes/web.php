@@ -45,12 +45,14 @@ Route::name('catalog.')->group(function () {
 });
 
 Route::name('product.')->group(function () {
-  Route::get('/product/add',                  [ProductsController::class, 'add_product'])->name('add-product')->middleware('can:create,App\Product');
-  Route::post('/product/save',                [ProductsController::class, 'save_product'])->name('save-product')->middleware('can:create,App\Product');
-  Route::get('/product/edit/{product}',       [ProductsController::class, 'edit_product'])->name('edit-product')->middleware('can:update,product');
-  Route::patch('/product/update/{product}',   [ProductsController::class, 'update_product'])->name('update-product')->middleware('can:update,product');
-  Route::get('/product/delete/{product}',     [ProductsController::class, 'delete_product'])->name('delete-product')->middleware('can:destroy,product');
-  Route::delete('/product/destroy/{product}', [ProductsController::class, 'destroy_product'])->name('destroy-product')->middleware('can:destroy,product');
+  Route::get('/product/add',                  [ProductsController::class, 'add_product'])->name('add')->middleware('can:create,App\Product');
+  Route::post('/product/save',                [ProductsController::class, 'save_product'])->name('save')->middleware('can:create,App\Product');
+  Route::get('/product/edit/{product}',       [ProductsController::class, 'edit_product'])->name('edit')->middleware('can:update,product');
+  Route::patch('/product/update/{product}',   [ProductsController::class, 'update_product'])->name('update')->middleware('can:update,product');
+  Route::get('/product/delete/{product}',     [ProductsController::class, 'delete_product'])->name('delete')->middleware('can:destroy,product');
+  Route::delete('/product/destroy/{product}', [ProductsController::class, 'destroy_product'])->name('destroy')->middleware('can:destroy,product');
+
+  Route::post('/product/upload/{product}',    [ProductsController::class, 'upload_file_product'])->name('upload-file')->middleware('can:update,product');
 
   Route::get('/',                             [ProductsController::class, 'index'])->name('index');
   Route::get('/product/{product}',            [ProductsController::class, 'detail'])->name('detail');

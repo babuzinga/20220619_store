@@ -3,7 +3,7 @@
 @section('title', 'Delete product')
 
 @section('content')
-  <form action="{{ route('product.destroy-product', ['product' => $product]) }}" method="post" class="mt-5 col-md-6">
+  <form action="{{ route('product.destroy', ['product' => $product]) }}" method="post" class="mt-5 col-md-6">
     @csrf
     @method('DELETE')
     <div class="alert alert-danger mb-5">Are you sure you want to delete?</div>
