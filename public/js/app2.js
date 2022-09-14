@@ -79,7 +79,7 @@ if (sendCodeAuthBlock) {
 const inputImageProduct = document.getElementById('inputImageProduct');
 if (inputImageProduct) {
   let uploadImageProduct = document.getElementById('upload_images_products'), preview, container1, container2;
-  inputImageProduct.addEventListener('change', function (e) {
+  inputImageproduct.createEventListener('change', function (e) {
     uploadImageProduct.innerText = '';
     if (e.target.files.length > 0) {
       for (let i = 0; i < e.target.files.length; i++) {

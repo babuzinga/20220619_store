@@ -24,6 +24,20 @@ class ProductsController extends Controller
   ];
 
   /**
+   * Для всех методов контроллера, за исключением show, index - требуются права администратора
+   * ProductsController constructor.
+   */
+  public function __construct()
+  {
+    // Подключение app/Http/Kernel.php
+    $this->middleware('admin')
+      ->except([
+        'show',
+        'index',
+      ]);
+  }
+
+  /**
    * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
    */
   public function index()
@@ -33,9 +47,9 @@ class ProductsController extends Controller
     return view('products/index', $products);
   }
 
-  public function detail(Product $product)
+  public function show(Product $product)
   {
-    return view('products/detail', ['product' => $product]);
+    return view('products/show', ['product' => $product]);
   }
 
 
@@ -45,17 +59,17 @@ class ProductsController extends Controller
   /**
    * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
    */
-  public function add_product()
+  public function create()
   {
     $catalogs = Catalog::all();
-    return view('products/add_edit_product', ['catalogs' => $catalogs, 'title' => 'Add product']);
+    return view('products/create_edit', ['catalogs' => $catalogs, 'title' => 'Add product']);
   }
 
   /**
    * @param Request $request
    * @return \Illuminate\Http\RedirectResponse
    */
-  public function save_product(Request $request)
+  public function store(Request $request)
   {
     $validate = $request->validate(self::BB_VALIDATOR, self::BB_ERROR_MESSAGES);
     $validate['id'] = Str::uuid();
@@ -73,10 +87,10 @@ class ProductsController extends Controller
    * @param Product $product
    * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
    */
-  public function edit_product(Product $product)
+  public function edit(Product $product)
   {
     $catalogs = Catalog::all();
-    return view('products/add_edit_product', ['product' => $product, 'catalogs' => $catalogs, 'title' => 'Edit product']);
+    return view('products/create_edit', ['product' => $product, 'catalogs' => $catalogs, 'title' => 'Edit product']);
   }
 
   /**
@@ -84,7 +98,7 @@ class ProductsController extends Controller
    * @param Product $product
    * @return \Illuminate\Http\RedirectResponse
    */
-  public function update_product(Request $request, Product $product)
+  public function update(Request $request, Product $product)
   {
     $validate = $request->validate(self::BB_VALIDATOR, self::BB_ERROR_MESSAGES);
     $validate['catalog_id'] =
@@ -101,16 +115,16 @@ class ProductsController extends Controller
    * @param Product $product
    * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
    */
-  public function delete_product(Product $product)
+  public function delete(Product $product)
   {
-    return view('products/delete_product', ['product' => $product]);
+    return view('products/delete', ['product' => $product]);
   }
 
   /**
    * @param Product $product
    * @return \Illuminate\Http\RedirectResponse
    */
-  public function destroy_product(Product $product)
+  public function destroy(Product $product)
   {
     $product->delete();
     // Поскольку в модели установлено "мягкое" удаление записей,
@@ -129,7 +143,7 @@ class ProductsController extends Controller
    * @param Product $product
    * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
    */
-  public function upload_file_product(Request $request, Product $product)
+  public function upload_file(Request $request, Product $product)
   {
     $validate = $request->validate(['file' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048']);
 

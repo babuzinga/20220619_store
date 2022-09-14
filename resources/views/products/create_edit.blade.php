@@ -5,7 +5,7 @@
 @section('content')
   <div class="row">
     <div class="mt-5 col-md-6">
-      <form action="@if(!empty($product)){{ route('product.update', ['product' => $product]) }}@else{{ route('product.save') }}@endif" method="post">
+      <form action="@if(!empty($product)){{ route('product.update', ['product' => $product]) }}@else{{ route('product.store') }}@endif" method="post">
         @csrf
         @if(!empty($product)) @method('PATCH') @endif
 

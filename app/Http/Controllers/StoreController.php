@@ -9,6 +9,11 @@ use Illuminate\Support\Str;
 
 class StoreController extends Controller
 {
+  public function index()
+  {
+    return view('store/index');
+  }
+
   public function about()
   {
     return view('store/about');

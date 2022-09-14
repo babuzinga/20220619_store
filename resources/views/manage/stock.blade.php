@@ -22,8 +22,8 @@
           <td>{{ $catalog->title }}</td>
           <td>0</td>
           <td>
-            <a href="{{ route('catalog.edit-catalog', ['catalog' => $catalog->id]) }}">Edit</a> /
-            <a href="{{ route('catalog.delete-catalog', ['catalog' => $catalog->id]) }}">Remove</a>
+            <a href="{{ route('catalog.edit', ['catalog' => $catalog->id]) }}">Edit</a> /
+            <a href="{{ route('catalog.delete', ['catalog' => $catalog->id]) }}">Remove</a>
           </td>
         </tr>
       @endforeach
@@ -34,7 +34,7 @@
   @endif
 
 
-  <a href="{{ route('catalog.add-catalog') }}" type="button" class="btn btn-primary mt-3 mb-5">Add catalog</a>
+  <a href="{{ route('catalog.create') }}" type="button" class="btn btn-primary mt-3 mb-5">Add catalog</a>
 
 
 
@@ -49,7 +49,7 @@
       <tbody>
       @foreach($products as $key => $product)
         <tr>
-          <td><a href="{{ route('product.detail', ['product' => $product->id]) }}">{{ $product->title }}</a></td>
+          <td><a href="{{ route('product.show', ['product' => $product->id]) }}">{{ $product->title }}</a></td>
           <td>{{ $product->price }}</td>
           <td>
             @if(!empty($product->catalog))
@@ -70,5 +70,5 @@
     <br>Products not found<br>
   @endif
 
-  <a href="{{ route('product.add') }}" type="button" class="btn btn-primary mt-3 mb-5">Add product</a>
+  <a href="{{ route('product.create') }}" type="button" class="btn btn-primary mt-3 mb-5">Add product</a>
 @endsection('main')

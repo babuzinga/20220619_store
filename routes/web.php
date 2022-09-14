@@ -19,10 +19,14 @@ use App\Http\Controllers\StoreController;
 |
 */
 
-// php artisan route:list
+// php artisan route:list --compact
+// php artisan route:list --columns=Method,URI,Middleware
 // php artisan route:cache
 
-Route::get('/about',                          [StoreController::class, 'about'])->name('about');
+Route::name('store.')->group(function () {
+  Route::get('/',                             [StoreController::class, 'index'])->name('index');
+  Route::get('/about',                        [StoreController::class, 'about'])->name('about');
+});
 
 Route::name('auth.')->group(function () {
   Route::get('/login',                        [AuthController::class, 'index'])->name('login');
@@ -32,30 +36,17 @@ Route::name('auth.')->group(function () {
   Route::post('/signout',                     [AuthController::class, 'signOut'])->name('signout');
 });
 
+// https://laravel.com/docs/8.x/controllers#actions-handled-by-resource-controller
+Route::resource('catalog', CatalogsController::class);
 Route::name('catalog.')->group(function () {
   // https://www.codecheef.org/article/laravel-gate-and-policy-example-from-scratch
-  Route::get('/catalog/add',                  [CatalogsController::class, 'add_catalog'])->name('add-catalog')->middleware('can:isAdmin');
-  Route::post('/catalog/save',                [CatalogsController::class, 'save_catalog'])->name('save-catalog')->middleware('can:isAdmin');
-  Route::get('/catalog/edit/{catalog}',       [CatalogsController::class, 'edit_catalog'])->name('edit-catalog')->middleware('can:isAdmin');
-  Route::patch('/catalog/update/{catalog}',   [CatalogsController::class, 'update_catalog'])->name('update-catalog')->middleware('can:isAdmin');
-  Route::get('/catalog/delete/{catalog}',     [CatalogsController::class, 'delete_catalog'])->name('delete-catalog')->middleware('can:isAdmin');
-  Route::delete('/catalog/destroy/{catalog}', [CatalogsController::class, 'destroy_catalog'])->name('destroy-catalog')->middleware('can:isAdmin');
-
-  Route::get('/catalog/{catalog}',            [CatalogsController::class, 'catalog'])->name('index');
+  Route::get('/catalog/{catalog}/delete',     [CatalogsController::class, 'delete'])->name('delete')->middleware('can:isAdmin');
 });
 
+Route::resource('product', ProductsController::class);
 Route::name('product.')->group(function () {
-  Route::get('/product/add',                  [ProductsController::class, 'add_product'])->name('add')->middleware('can:create,App\Product');
-  Route::post('/product/save',                [ProductsController::class, 'save_product'])->name('save')->middleware('can:create,App\Product');
-  Route::get('/product/edit/{product}',       [ProductsController::class, 'edit_product'])->name('edit')->middleware('can:update,product');
-  Route::patch('/product/update/{product}',   [ProductsController::class, 'update_product'])->name('update')->middleware('can:update,product');
-  Route::get('/product/delete/{product}',     [ProductsController::class, 'delete_product'])->name('delete')->middleware('can:destroy,product');
-  Route::delete('/product/destroy/{product}', [ProductsController::class, 'destroy_product'])->name('destroy')->middleware('can:destroy,product');
-
-  Route::post('/product/upload/{product}',    [ProductsController::class, 'upload_file_product'])->name('upload-file')->middleware('can:update,product');
-
-  Route::get('/',                             [ProductsController::class, 'index'])->name('index');
-  Route::get('/product/{product}',            [ProductsController::class, 'detail'])->name('detail');
+  Route::get('/product/{product}/delete',     [ProductsController::class, 'delete'])->name('delete')->middleware('can:destroy,product');
+  Route::post('/product/{product}/upload',    [ProductsController::class, 'upload_file'])->name('upload-file')->middleware('can:update,product');
 });
 
 Route::name('home.')->group(function () {

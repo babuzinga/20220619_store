@@ -1,8 +1,4 @@
-@extends('layouts.base')
-
-@section('title', $title)
-
-@section('content')
+<section>
   @if(count($products))
     <table class="table mt-5">
       <thead>
@@ -12,7 +8,7 @@
       <tbody>
       @foreach($products as $key => $product)
         <tr>
-          <td><a href="{{ route('product.detail', ['product' => $product->id]) }}">{{ $product->title }}</a></td>
+          <td><a href="{{ route('product.show', ['product' => $product->id]) }}">{{ $product->title }}</a></td>
           <td>{{ $product->price }}</td>
         </tr>
       @endforeach
@@ -21,4 +17,4 @@
   @else
     Products not found
   @endif
-@endsection('main')
+</section>

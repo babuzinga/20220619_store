@@ -25,6 +25,11 @@ class ProductPolicy
     return $user->isAdmin();
   }
 
+  public function view(User $user)
+  {
+    return true;
+  }
+
   public function update(User $user, Product $product)
   {
     return $user->id === $product->user->id;

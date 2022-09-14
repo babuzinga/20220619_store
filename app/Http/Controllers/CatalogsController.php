@@ -9,35 +9,66 @@ use Illuminate\Support\Str;
 
 class CatalogsController extends Controller
 {
-
   /**
-   * @param Catalog $catalog
-   * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+   * Для всех методов контроллера, за исключением show, index - требуются права администратора
+   * ProductsController constructor.
    */
-  public function catalog(Catalog $catalog)
+  public function __construct()
   {
-    return view('catalogs/catalog', ['products' => $catalog->products, 'title' => $catalog->title]);
+    // Подключение app/Http/Kernel.php
+    $this->middleware('admin')
+      ->except([
+        'index',
+      ]);
   }
 
   /**
    * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
    */
-  public function add_catalog()
+  public function index()
+  {
+    $catalogs = Catalog::getRootCatalogs();
+    return view('catalogs/show', ['products' => [], 'catalogs' => $catalogs, 'title' => 'Каталоги']);
+  }
+
+  /**
+   * @param Catalog $catalog
+   * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+   */
+  public function show(Catalog $catalog)
+  {
+    $catalogs = $catalog->catalogs;
+    $products = $catalog->products;
+
+    // https://laravel.su/docs/8.x/blade - поблочный вывод продуктов
+    // @each('view.name', $jobs, 'job')
+
+    return view('catalogs/show', ['products' => $products, 'catalogs' => $catalogs, 'title' => $catalog->title]);
+  }
+
+
+
+
+
+  /**
+   * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+   */
+  public function create()
   {
     $catalogs = Catalog::all();
-    return view('catalogs/add_edit_catalog', ['catalogs' => $catalogs]);
+    return view('catalogs/create_edit', ['catalogs' => $catalogs]);
   }
 
   /**
    * @param Request $request
    * @return \Illuminate\Http\RedirectResponse
    */
-  public function save_catalog(Request $request)
+  public function store(Request $request)
   {
     $data = [
-      'id'        => Str::uuid(),
-      'title'     => !empty($_POST['title']) ? $request->title : '-',
-      'parent_id' => empty($_POST['parent_id']) ? NULL : $request->parent_id,
+      'id'          => Str::uuid(),
+      'title'       => !empty($_POST['title']) ? $request->title : '-',
+      'catalog_id'  => empty($_POST['catalog_id']) ? NULL : $request->catalog_id,
     ];
 
     Catalog::create($data);
@@ -48,10 +79,10 @@ class CatalogsController extends Controller
    * @param Catalog $catalog
    * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
    */
-  public function edit_catalog(Catalog $catalog)
+  public function edit(Catalog $catalog)
   {
     $catalogs = Catalog::all();
-    return view('catalogs/add_edit_catalog', ['catalog' => $catalog, 'catalogs' => $catalogs]);
+    return view('catalogs/create_edit', ['catalog' => $catalog, 'catalogs' => $catalogs]);
   }
 
   /**
@@ -59,11 +90,11 @@ class CatalogsController extends Controller
    * @param Catalog $catalog
    * @return \Illuminate\Http\RedirectResponse
    */
-  public function update_catalog(Request $request, Catalog $catalog)
+  public function update(Request $request, Catalog $catalog)
   {
     $data = [
-      'title'     => !empty($_POST['title']) ? $request->title : '-',
-      'parent_id' => empty($_POST['parent_id']) ? NULL : $request->parent_id,
+      'title'       => !empty($_POST['title']) ? $request->title : '-',
+      'catalog_id'  => empty($_POST['catalog_id']) ? NULL : $request->catalog_id,
     ];
 
     $catalog->fill($data);
@@ -75,12 +106,16 @@ class CatalogsController extends Controller
    * @param Catalog $catalog
    * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
    */
-  public function delete_catalog(Catalog $catalog)
+  public function delete(Catalog $catalog)
   {
-    return view('catalogs/delete_catalog', ['catalog' => $catalog]);
+    return view('catalogs/delete', ['catalog' => $catalog]);
   }
 
-  public function destroy_catalog(Catalog $catalog)
+  /**
+   * @param Catalog $catalog
+   * @return \Illuminate\Http\RedirectResponse
+   */
+  public function destroy(Catalog $catalog)
   {
     $catalog->delete();
     return redirect()->route('manage.stoke');

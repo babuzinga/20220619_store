@@ -3,15 +3,7 @@
 @section('title', $product->getTitle())
 
 @section('content')
-  <nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="{{ route('product.index') }}">Главная</a></li>
-      @if(!empty($product->catalog))
-        <li class="breadcrumb-item"><a href="{{ route('catalog.index', ['catalog' => $product->catalog->id]) }}">{{ $product->catalog->title }}</a></li>
-      @endif
-      <li class="breadcrumb-item active" aria-current="page">Товар</li>
-    </ol>
-  </nav>
+  @includeIf('store/breadcrumb', ['breadcrumb' => $breadcrumb ?? []])
 
   <div class="row mt-4">
     <div class="col-sm-5 mb-4">

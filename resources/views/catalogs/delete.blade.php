@@ -3,7 +3,7 @@
 @section('title', 'Delete catalog')
 
 @section('content')
-  <form action="{{ route('catalog.destroy-catalog', ['catalog' => $catalog]) }}" method="post" class="mt-5 col-md-6">
+  <form action="{{ route('catalog.destroy', ['catalog' => $catalog]) }}" method="post" class="mt-5 col-md-6">
     @csrf
     @method('DELETE')
     <div class="alert alert-danger mb-5">Are you sure you want to delete?</div>

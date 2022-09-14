@@ -3,7 +3,7 @@
 @section('title', 'Add catalog')
 
 @section('content')
-  <form action="@if(!empty($catalog)){{ route('catalog.update-catalog', ['catalog' => $catalog]) }}@else{{ route('catalog.save-catalog') }}@endif" method="post" class="mt-5 col-md-6">
+  <form action="@if(!empty($catalog)){{ route('catalog.update', ['catalog' => $catalog]) }}@else{{ route('catalog.store') }}@endif" method="post" class="mt-5 col-md-6">
     @csrf
     @if(!empty($catalog)) @method('PATCH') @endif
     <div class="input-group mb-3">
@@ -23,11 +23,11 @@
     @if(count($catalogs))
       <div class="input-group mb-5">
         <label class="input-group-text" for="parent_catalog">Parent</label>
-        <select name="parent_id"  class="form-select" id="parent_catalog">
-          @if (empty($catalog->parent_id))<option value="0" selected="">Choose...</option>@endif
+        <select name="catalog_id"  class="form-select" id="parent_catalog">
+          @if (empty($catalog->catalog_id))<option value="0" selected="">Choose...</option>@endif
 
           @foreach($catalogs as $key => $parent)
-            <option value="{{ $parent->id }}" @if (!empty($catalog) && $catalog->parent_id == $parent->id) selected @endif>{{ $parent->title }}</option>
+            <option value="{{ $parent->id }}" @if (!empty($catalog) && $catalog->catalog_id == $parent->id) selected @endif>{{ $parent->title }}</option>
           @endforeach
         </select>
       </div>

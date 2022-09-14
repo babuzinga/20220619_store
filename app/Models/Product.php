@@ -25,7 +25,7 @@ class Product extends Model
     'discount',
     'catalog_id',
     'user_id',
-    'products_cnt',
+    'amount',
     'status',
     'flag'
   ];

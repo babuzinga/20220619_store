@@ -26,7 +26,7 @@ class CreateProductsTables extends Migration
       $table->float('discount')->default(0);
       $table->foreignUuid('catalog_id')->nullable()->constrained()->onDelete('restrict');
       $table->foreignUuid('user_id')->constrained()->onDelete('restrict');
-      $table->integer('products_cnt')->default(1);
+      $table->integer('amount')->default(1);
       $table->enum('status', ['1', '2'])->default(1)->comment('1-active / 2-hidden');
       $table->char('flag', 1)->default(0);
       $table->timestamps();

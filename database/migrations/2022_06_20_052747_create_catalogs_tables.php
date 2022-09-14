@@ -16,8 +16,9 @@ class CreateCatalogsTables extends Migration
     Schema::create('catalogs', function (Blueprint $table) {
       $table->uuid('id')->primary();
       $table->string('title');
-      $table->char('parent_id', 36)->nullable();
+      $table->char('catalog_id', 36)->nullable();
       $table->float('discount')->default(0);
+      $table->integer('products_amount')->default(0);
       //$table->foreign('parent_id')->references('id')->on('catalogs')->onDelete('restrict');
       $table->enum('status', ['1', '2'])->default(1)->comment('1-active / 2-hidden');
       $table->timestamps();
@@ -27,7 +28,7 @@ class CreateCatalogsTables extends Migration
     DB::statement("
       ALTER TABLE `catalogs` 
       ADD CONSTRAINT `catalogs_parent_id_foreign` 
-      FOREIGN KEY (`parent_id`) 
+      FOREIGN KEY (`catalog_id`) 
       REFERENCES `catalogs` (`id`) 
       ON UPDATE RESTRICT ON DELETE RESTRICT;
     ");
