@@ -19,6 +19,7 @@ class CatalogsController extends Controller
     $this->middleware('admin')
       ->except([
         'index',
+        'show',
       ]);
   }
 
@@ -27,8 +28,9 @@ class CatalogsController extends Controller
    */
   public function index()
   {
+    $breadcrumb = [['link' => null, 'title' => 'Каталоги']];
     $catalogs = Catalog::getRootCatalogs();
-    return view('catalogs/show', ['products' => [], 'catalogs' => $catalogs, 'title' => 'Каталоги']);
+    return view('catalogs/show', ['products' => [], 'catalogs' => $catalogs, 'title' => 'Каталоги', 'breadcrumb' => $breadcrumb]);
   }
 
   /**
@@ -37,13 +39,24 @@ class CatalogsController extends Controller
    */
   public function show(Catalog $catalog)
   {
+    // Формирование "Хлебных крошек"
+    $breadcrumb = array_merge(
+      [['link' => route('catalog.index'), 'title' => 'Каталоги']],
+      array_reverse($catalog->getBreadcrumb())
+    );
+    $breadcrumb[] = ['id' => null, 'title' => $catalog->getTitle()];
     $catalogs = $catalog->catalogs;
     $products = $catalog->products;
 
-    // https://laravel.su/docs/8.x/blade - поблочный вывод продуктов
-    // @each('view.name', $jobs, 'job')
+    $data = [
+      'catalog'     => $catalog,
+      'products'    => $products,
+      'catalogs'    => $catalogs,
+      'title'       => $catalog->getTitle(),
+      'breadcrumb'  => $breadcrumb
+    ];
 
-    return view('catalogs/show', ['products' => $products, 'catalogs' => $catalogs, 'title' => $catalog->title]);
+    return view('catalogs/show', $data);
   }
 
 

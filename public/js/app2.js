@@ -75,6 +75,10 @@ if (sendCodeAuthBlock) {
     }
   }
 }
+
+let phone_mask = document.getElementById('phone-mask');
+if (phone_mask) IMask(document.getElementById('phone-mask'), { mask: '+{7}(000)000-00-00' });
+
 // ================================================================================================================== //
 const inputImageProduct = document.getElementById('inputImageProduct');
 if (inputImageProduct) {

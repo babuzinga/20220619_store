@@ -34,6 +34,21 @@ class Product extends Model
   protected $keyType = 'char';
   public $incrementing = false;
 
+  static function getNewProducts($limit = 3)
+  {
+    return self::latest('created_at')->limit($limit)->get();
+  }
+
+  static function getTopProducts($limit = 6)
+  {
+    return self::orderBy('sales')->limit($limit)->get();
+  }
+
+  static function getDiscountProducts($limit = 6)
+  {
+    return self::orderBy('discount')->limit($limit)->get();
+  }
+
   /**
    * Извлечение владельца задачи (связь инверсия один ко многим)
    * https://laravel.com/docs/8.x/eloquent-relationships#one-to-many-inverse
@@ -71,6 +86,16 @@ class Product extends Model
 
   public function getPrice()
   {
-    return $this->price;
+    return $this->price . ' руб.';
+  }
+
+  public function getAmount()
+  {
+    return $this->amount;
+  }
+
+  public function getCatalog()
+  {
+    return !empty($this->catalog_id) ? Catalog::where('id', $this->catalog_id)->first() : false;
   }
 }

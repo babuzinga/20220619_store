@@ -16,7 +16,7 @@ class ProductsController extends Controller
     'desc'          => 'max:500',
     'price'         => 'required|numeric',
     'discount'      => 'required|numeric',
-    'products_cnt'  => 'required|numeric',
+    'amount'  => 'required|numeric',
   ];
 
   const BB_ERROR_MESSAGES = [
@@ -47,9 +47,24 @@ class ProductsController extends Controller
     return view('products/index', $products);
   }
 
+  /**
+   * Просмотр товара
+   * @param Product $product
+   * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+   */
   public function show(Product $product)
   {
-    return view('products/show', ['product' => $product]);
+    $catalog = $product->getCatalog();
+    if (!empty($catalog)) {
+      $breadcrumb = array_merge(
+        [['link' => route('catalog.index'), 'title' => 'Каталоги']],
+        array_reverse($catalog->getBreadcrumb())
+      );
+      $breadcrumb[] = ['link' => route('catalog.show', ['catalog' => $catalog->id]), 'title' => $catalog->getTitle()];
+      $breadcrumb[] = ['id' => null, 'title' => $product->getTitle()];
+    }
+
+    return view('products/show', ['product' => $product, 'breadcrumb' => $breadcrumb]);
   }
 
 
@@ -80,6 +95,8 @@ class ProductsController extends Controller
     ;
 
     Auth::user()->products()->create($validate);
+    Catalog::updateAmountProducts();
+
     return redirect()->route('manage.stoke');
   }
 
@@ -108,6 +125,8 @@ class ProductsController extends Controller
     ;
     $product->fill($validate);
     $product->save();
+    Catalog::updateAmountProducts();
+
     return redirect()->route('manage.stoke');
   }
 

@@ -21,7 +21,7 @@
 Каталог
 + uuid вместо id
 + страницу каталога с товарами
-+ products_cnt / status
++ amount / status
 + discount (скидка)
 
 

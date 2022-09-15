@@ -38,6 +38,7 @@ class AuthController extends Controller
     // Если данные не пустые, в них указан номер телефона и код требуемого дейтсвия ...
     if (!empty($data) && !empty($data['phone']) && in_array($data['action'], ['SENT_CODE', 'VERIFIED_CODE'])) {
       // Извличение пользователя по переданному номеру телефона
+      //$phone = str_replace([' ', '(', ')', '-'], '', $data['phone']);
       $phone = $data['phone'];
       $user = User::where('phone', $phone)->first();
 

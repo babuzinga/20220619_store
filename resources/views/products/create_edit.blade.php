@@ -70,10 +70,16 @@
           <div class="mb-3">
             <label for="inputCatalog" class="form-label">Catalog</label>
             <select name="catalog_id" class="form-select" id="inputCatalog">
-              @if (empty($product) || empty($product->catalog_id))<option value="" selected="">Choose...</option>@endif
+              @if ((empty($product) || empty($product->catalog_id)) && empty($_GET['cid']))<option value="" selected="">Choose...</option>@endif
 
               @foreach($catalogs as $key => $catalog)
-                <option value="{{ $catalog->id }}" @if (!empty($product) && $product->catalog_id == $catalog->id) selected @endif>{{ $catalog->title }}</option>
+                <option
+                    value="{{ $catalog->id }}"
+                    @if (
+                      (!empty($product) && $product->catalog_id == $catalog->id) ||
+                      (empty($product) && !empty($_GET['cid']) && $_GET['cid'] == $catalog->id)
+                    ) selected @endif
+                >{{ $catalog->getTitle() }}</option>
               @endforeach
             </select>
             @error('catalog_id')
@@ -87,17 +93,17 @@
         @endif
 
         <div class="mb-3">
-          <label for="inputProductsCnt" class="form-label">Product count</label>
+          <label for="inputAmount" class="form-label">Product amount</label>
           <input
-              id="inputProductsCnt"
+              id="inputAmount"
               type="text"
-              name="products_cnt"
-              class="form-control @error('products_cnt') is-invalid @enderror"
+              name="amount"
+              class="form-control @error('amount') is-invalid @enderror"
               required="required"
-              value="{{ old('products_cnt', !empty($product) ? $product->products_cnt : '1') }}"
+              value="{{ old('amount', !empty($product) ? $product->amount : '1') }}"
               placeholder="1"
           >
-          @error('products_cnt')
+          @error('amount')
           <span class="invalid-feedback"><strong>{{ $message }}</strong></span>
           @enderror
         </div>

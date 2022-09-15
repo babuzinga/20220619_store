@@ -72,5 +72,6 @@
 
 <script src="/js/bootstrap.bundle.min.js"></script>
 <script src="{{ asset('js/app2.js') }}" defer></script>
+<script src="https://unpkg.com/imask"></script>
 </body>
 </html>

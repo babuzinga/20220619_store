@@ -21,9 +21,9 @@ class CreateProductsTables extends Migration
       $table->string('image_preview')->nullable();
       $table->integer('image_cnt')->default(0);
       $table->integer('views')->default(0);
-      $table->integer('sales')->default(0);
+      $table->integer('sales')->default(0)->comment('Количество продаж');
       $table->float('price');
-      $table->float('discount')->default(0);
+      $table->float('discount')->default(0)->comment('Скидка на товар');
       $table->foreignUuid('catalog_id')->nullable()->constrained()->onDelete('restrict');
       $table->foreignUuid('user_id')->constrained()->onDelete('restrict');
       $table->integer('amount')->default(1);

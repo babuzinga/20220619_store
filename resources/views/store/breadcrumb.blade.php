@@ -4,9 +4,12 @@
 
     @if(!empty($breadcrumb))
       @foreach($breadcrumb as $item)
-      <li class="breadcrumb-item"><a href="{{ $item['link'] }}">{{ $item['title'] }}</a></li>
+        @if(!empty($item['link']))
+          <li class="breadcrumb-item"><a href="{{ $item['link'] }}">{{ $item['title'] }}</a></li>
+        @else
+          <li class="breadcrumb-item active" aria-current="page">{{ $item['title'] }}</li>
+        @endif
       @endforeach
     @endif
-    <li class="breadcrumb-item active" aria-current="page">Товар</li>
   </ol>
 </nav>

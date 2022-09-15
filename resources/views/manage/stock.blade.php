@@ -9,66 +9,9 @@
     </div>
   @endif
 
-  @if(count($catalogs))
-    <table class="table mt-5">
-      <thead>
-      <th>Title</th>
-      <th>Products</th>
-      <th>Actions</th>
-      </thead>
-      <tbody>
-      @foreach($catalogs as $key => $catalog)
-        <tr>
-          <td>{{ $catalog->title }}</td>
-          <td>0</td>
-          <td>
-            <a href="{{ route('catalog.edit', ['catalog' => $catalog->id]) }}">Edit</a> /
-            <a href="{{ route('catalog.delete', ['catalog' => $catalog->id]) }}">Remove</a>
-          </td>
-        </tr>
-      @endforeach
-      </tbody>
-    </table>
-  @else
-    <br>Catalogs not found<br>
-  @endif
+  @includeIf('catalogs/list_table', ['catalogs' => $catalogs])
+  <a href="{{ route('catalog.create') }}" type="button" class="btn btn-primary mt-3">Add catalog</a>
 
-
-  <a href="{{ route('catalog.create') }}" type="button" class="btn btn-primary mt-3 mb-5">Add catalog</a>
-
-
-
-  @if(count($products))
-    <table class="table">
-      <thead>
-      <th>Title</th>
-      <th>Price</th>
-      <th>Catalog</th>
-      <th>Actions</th>
-      </thead>
-      <tbody>
-      @foreach($products as $key => $product)
-        <tr>
-          <td><a href="{{ route('product.show', ['product' => $product->id]) }}">{{ $product->title }}</a></td>
-          <td>{{ $product->price }}</td>
-          <td>
-            @if(!empty($product->catalog))
-              <a href="{{ route('catalog.index', ['catalog' => $product->catalog->id]) }}">{{ $product->catalog->title }}</a>
-            @else
-              -
-            @endif
-          </td>
-          <td>
-            <a href="{{ route('product.edit', ['product' => $product->id]) }}">Edit</a> /
-            <a href="{{ route('product.delete', ['product' => $product->id]) }}">Remove</a>
-          </td>
-        </tr>
-      @endforeach
-      </tbody>
-    </table>
-  @else
-    <br>Products not found<br>
-  @endif
-
+  @includeIf('products/list_table', ['catalogs' => $catalogs])
   <a href="{{ route('product.create') }}" type="button" class="btn btn-primary mt-3 mb-5">Add product</a>
 @endsection('main')
