@@ -38,7 +38,7 @@
                     <form method="post" action="{{ route('auth.signup') }}" name="auth">
                       <div class="modal-body">
                         <input type="hidden" name="phone">
-                        @csrf
+                        {{--@csrf--}}
                         <p class="response"></p>
                         <div class="mt-3">
                           <input type="text" class="form-control" placeholder="Code" name="code" required autocomplete="off">

@@ -1,4 +1,5 @@
 const xhr = new XMLHttpRequest();
+let i;
 
 
 
@@ -37,7 +38,6 @@ if (sendCodeAuthBlock) {
         xhr.open('POST', url, true)
         xhr.setRequestHeader('Content-type', 'application/json; charset=UTF-8')
         xhr.send(post);
-
         xhr.onload = function () {
           if (xhr.status === 200) {
             let json = JSON.parse(xhr.response);
@@ -76,7 +76,7 @@ if (sendCodeAuthBlock) {
   }
 }
 
-let phone_mask = document.getElementById('phone-mask');
+const phone_mask = document.getElementById('phone-mask');
 if (phone_mask) IMask(document.getElementById('phone-mask'), { mask: '+{7}(000)000-00-00' });
 
 // ================================================================================================================== //
@@ -98,6 +98,23 @@ if (inputImageProduct) {
       }
     }
   })
+}
+// ================================================================================================================== //
+const in_cart_buttons = document.querySelectorAll(".in-cart"), cart_cnt = document.getElementById('cart-cnt');
+for (i = 0; i < in_cart_buttons.length; i++) in_cart_buttons[i].addEventListener('click', ({ target }) => { in_cart(target.dataset.product); });
+
+in_cart('cart');
+function in_cart(pid) {
+  let token = document.querySelector('[name="_token"]'), post = JSON.stringify({ pid: pid, _token: token.value }), json;
+  xhr.open('POST', '/in-cart', true)
+  xhr.setRequestHeader('Content-type', 'application/json; charset=UTF-8')
+  xhr.send(post);
+  xhr.onload = function () {
+    if (xhr.status === 200) {
+      json = JSON.parse(xhr.response);
+      cart_cnt.innerText = json.r;
+    }
+  }
 }
 // ================================================================================================================== //
 

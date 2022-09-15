@@ -7,6 +7,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ManageController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\StoreController;
+use App\Http\Controllers\CartController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,6 +27,12 @@ use App\Http\Controllers\StoreController;
 Route::name('store.')->group(function () {
   Route::get('/',                             [StoreController::class, 'index'])->name('index');
   Route::get('/about',                        [StoreController::class, 'about'])->name('about');
+});
+
+Route::name('cart.')->group(function () {
+  Route::get('/cart',                         [CartController::class, 'index'])->name('index');
+  Route::post('/in-cart',                     [CartController::class, 'add'])->name('add');
+  Route::get('/clear-cart',                   [CartController::class, 'clear'])->name('clear');
 });
 
 Route::name('auth.')->group(function () {

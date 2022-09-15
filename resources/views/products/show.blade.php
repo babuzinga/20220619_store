@@ -13,7 +13,7 @@
       {{--<h1>{{ $product->getTitle() }}</h1>--}}
       <div><span class="price-product">{{ $product->getPrice() }}</span></div>
       <div class="mt-3 desc2">{{ $product->getDesc() }}</div>
-      <button type="button" class="btn btn-danger mt-4">В корзину</button>
+      <button type="button" class="btn btn-danger mt-4 in-cart" data-product="{{ $product->id }}">В корзину</button>
     </div>
   </div>
 @endsection('main')

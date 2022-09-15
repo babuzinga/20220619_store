@@ -84,6 +84,9 @@ class Product extends Model
     return !empty($this->image_preview) ? '/public/images/' . $this->image_preview : '/public/images/no-photo.png';
   }
 
+  /**
+   * @return string
+   */
   public function getPrice()
   {
     return $this->price . ' руб.';

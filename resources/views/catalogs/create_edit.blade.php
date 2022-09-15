@@ -4,7 +4,7 @@
 
 @section('content')
   <form action="@if(!empty($catalog)){{ route('catalog.update', ['catalog' => $catalog]) }}@else{{ route('catalog.store') }}@endif" method="post" class="mt-5 col-md-6">
-    @csrf
+    {{--@csrf--}}
     @if(!empty($catalog)) @method('PATCH') @endif
     <div class="input-group mb-3">
       <span class="input-group-text">Title</span>

@@ -18,7 +18,7 @@
       jinimin.store
     </a>
 
-    <div class="col-md-3 text-end">
+    <div class="col-md-4 text-end">
       <!-- Authentication Links -->
       @guest
         <a href="{{ route('auth.login') }}" class="btn btn-outline-primary me-2">Login</a>
@@ -30,6 +30,11 @@
           @csrf
         </form>
       @endauth
+
+      <a href="{{ route('cart.index') }}" class="btn btn-danger position-relative">
+        Корзина
+        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="cart-cnt"></span>
+      </a>
     </div>
   </header>
 </div>
@@ -64,10 +69,13 @@
       @endif
     @endauth
 
+    <a href="{{ route('store.about') }}" class="float-end">О нас</a>
+
     @env('local')
     <span class="float-end text-muted">Laravel v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }})</span>
     @endenv
   </div>
+  @csrf
 </footer>
 
 <script src="/js/bootstrap.bundle.min.js"></script>

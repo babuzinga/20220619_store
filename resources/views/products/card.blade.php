@@ -3,8 +3,10 @@
     <img src="{{ $product->getPreview() }}" class="card-img-top" alt="...">
     <div class="card-body">
       <h5 class="card-title"><a href="{{ route('product.show', ['product' => $product->id]) }}">{{ $product->getTitle() }}</a></h5>
-      <p class="card-text">{{ $product->getDesc() }}</p>
+      <p class="card-text desc2">{{ $product->getDesc() }}</p>
       <span>{{ $product->getPrice() }}</span>
+      <br>
+      <button type="button" class="btn btn-danger mt-4 in-cart" data-product="{{ $product->id }}">В корзину</button>
 
       @auth
         @if(Auth::user()->isAdmin())
