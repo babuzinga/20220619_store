@@ -83,6 +83,6 @@ class CartController extends Controller
   public function clear(Request $request)
   {
     $data = $request->session()->all();
-    $this->print_array($data);
+    print_array($data);
   }
 }

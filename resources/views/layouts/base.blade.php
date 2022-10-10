@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="/styles/bootstrap.min.css">
   <link rel="stylesheet" href="/fonts/rubik.css">
-  <link rel="stylesheet" href="/styles/main.css">
+  <link rel="stylesheet" href="{{ get_url_with_hash('/styles/main.css') }}">
   <title>@hasSection('title') @yield('title') - @endif{{ config('app.name', 'Laravel') }}</title>
 </head>
 <body class="d-flex flex-column h-100">
@@ -72,14 +72,14 @@
     <a href="{{ route('store.about') }}" class="float-end">О нас</a>
 
     @env('local')
-    <span class="float-end text-muted">Laravel v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }})</span>
+    <span class="text-muted"> - Laravel v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }})</span>
     @endenv
   </div>
   @csrf
 </footer>
 
 <script src="/js/bootstrap.bundle.min.js"></script>
-<script src="{{ asset('js/app2.js') }}" defer></script>
+<script src="{{ get_url_with_hash('/js/app2.js') }}" defer></script>
 <script src="https://unpkg.com/imask"></script>
 </body>
 </html>

@@ -17,8 +17,9 @@ class AuthController extends Controller
   public function index()
   {
     if(Auth::check()) {
-      return redirect()->route('product.index');
+      return redirect()->route('store.index');
     }
+
     return view('auth.login', ['title' => 'Вход или регистрация']);
   }
 
@@ -111,7 +112,7 @@ class AuthController extends Controller
 
     $credentials = $request->only('phone', 'code');
     if (Auth::attempt(['phone' => $credentials['phone'], 'password' => $credentials['code']])) {
-      return redirect()->route('product.index')->withSuccess('Signed in');
+      return redirect()->route('store.index')->withSuccess('Signed in');
     }
 
     return redirect("login")->withSuccess('Phone or code details are not valid');
@@ -122,6 +123,6 @@ class AuthController extends Controller
     Session::flush();
     Auth::logout();
 
-    return redirect()->route('product.index');
+    return redirect()->route('store.index');
   }
 }
