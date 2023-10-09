@@ -83,7 +83,7 @@ if (phone_mask) IMask(document.getElementById('phone-mask'), { mask: '+{7}(000)0
 const inputImageProduct = document.getElementById('inputImageProduct');
 if (inputImageProduct) {
   let uploadImageProduct = document.getElementById('upload_images_products'), preview, container1, container2;
-  inputImageproduct.createEventListener('change', function (e) {
+  inputImageProduct.addEventListener('change', function (e) {
     uploadImageProduct.innerText = '';
     if (e.target.files.length > 0) {
       for (let i = 0; i < e.target.files.length; i++) {

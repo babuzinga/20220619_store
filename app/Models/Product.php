@@ -7,6 +7,7 @@ use App\Models\Catalog;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Storage;
 
 class Product extends Model
 {
@@ -81,7 +82,24 @@ class Product extends Model
 
   public function getPreview()
   {
-    return !empty($this->image_preview) ? '/public/images/' . $this->image_preview : '/public/images/no-photo.png';
+    // https://www.itsolutionstuff.com/post/how-to-display-image-from-storage-folder-in-laravelexample.html
+    // https://stackoverflow.com/questions/50997652/laravel-retrieve-images-from-storage-to-view
+
+
+
+    //$files = $this->files;
+
+
+    /*if (!empty($this->image_preview)) {
+      $link = '/public/images/' . $this->image_preview;
+      $link = Storage::disk('public')->get($link);
+    } else {
+      $link = '/public/images/no-photo.png';
+    }
+    echo $link; exit;*/
+
+
+    return '/public/images/no-photo.png';
   }
 
   /**

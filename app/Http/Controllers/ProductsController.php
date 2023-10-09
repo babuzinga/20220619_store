@@ -64,6 +64,8 @@ class ProductsController extends Controller
       $breadcrumb[] = ['id' => null, 'title' => $product->getTitle()];
     }
 
+    $product->getPreview();
+
     return view('products/show', ['product' => $product, 'breadcrumb' => $breadcrumb]);
   }
 
